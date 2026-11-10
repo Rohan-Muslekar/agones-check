@@ -1,0 +1,157 @@
+backend-casual/alloc-label-typo-1	accepted	
+backend-casual/alpha-gated-field-1	rejected	The Fleet "lobby" is invalid: spec.template.spec.players: Forbidden: Value cannot be set unless feature flag PlayerTracking is enabled
+backend-casual/alpha-gated-field-2	rejected	The Fleet "practice" is invalid: spec.template.spec.players: Forbidden: Value cannot be set unless feature flag PlayerTracking is enabled
+backend-casual/benign-add-label-1	accepted	
+backend-casual/benign-add-label-2	accepted	
+backend-casual/benign-image-tag-1	accepted	
+backend-casual/benign-image-tag-2	accepted	
+backend-casual/benign-rename-fleet-1	accepted	
+backend-casual/benign-rename-fleet-2	accepted	
+backend-casual/benign-replicas-1	accepted	
+backend-casual/benign-replicas-2	accepted	
+backend-casual/duplicate-name-1	accepted	
+backend-casual/duplicate-name-2	accepted	
+backend-casual/fas-fleetname-typo-1	accepted	
+backend-casual/fas-fleetname-typo-2	accepted	
+backend-casual/fleet-label-drift-1	accepted	
+backend-casual/invalid-bounds-1	rejected	The FleetAutoscaler "lobby-buffer" is invalid:  * spec.policy.buffer.minReplicas: Invalid value: 3: minReplicas should be smaller than maxReplicas * spec.policy.buffer.maxReplicas: Invalid value: 2: maxReplicas should be bigger than or equal to bufferSize
+backend-casual/invalid-bounds-2	accepted	
+backend-casual/unknown-field-1	rejected	Error from server (BadRequest): error when creating "STDIN": Fleet in version "v1" cannot be handled as a Fleet: strict decoding error: unknown field "spec.replica"
+backend-casual/unknown-field-2	rejected	Error from server (BadRequest): error when creating "STDIN": Fleet in version "v1" cannot be handled as a Fleet: strict decoding error: unknown field "spec.replica"
+backend-casual/unknown-field-3	rejected	Error from server (BadRequest): error when creating "STDIN": FleetAutoscaler in version "v1" cannot be handled as a FleetAutoscaler: strict decoding error: unknown field "spec.policy.buffer.buffersize"
+backend-casual/unknown-field-4	rejected	Error from server (BadRequest): error when creating "STDIN": FleetAutoscaler in version "v1" cannot be handled as a FleetAutoscaler: strict decoding error: unknown field "spec.policy.chain[0].schedule.policy.buffer.buffersize"
+backend-ranked/alloc-capacity-unreachable-1	accepted	
+backend-ranked/alloc-counter-key-typo-1	accepted	
+backend-ranked/alloc-label-typo-1	accepted	
+backend-ranked/alpha-gated-field-1	rejected	The Fleet "ranked" is invalid: spec.template.spec.players: Forbidden: Value cannot be set unless feature flag PlayerTracking is enabled
+backend-ranked/benign-add-label-1	accepted	
+backend-ranked/benign-image-tag-1	accepted	
+backend-ranked/benign-raise-capacity-1	accepted	
+backend-ranked/benign-rename-fleet-1	accepted	
+backend-ranked/benign-replicas-1	accepted	
+backend-ranked/duplicate-name-1	accepted	
+backend-ranked/fas-counter-key-typo-1	accepted	
+backend-ranked/fas-fleetname-typo-1	accepted	
+backend-ranked/fleet-label-drift-1	accepted	
+backend-ranked/invalid-bounds-1	rejected	The FleetAutoscaler "ranked-rooms" is invalid:  * spec.policy.counter.minCapacity: Invalid value: 8: minCapacity should be smaller than maxCapacity * spec.policy.counter.maxCapacity: Invalid value: 7: maxCapacity should be bigger than or equal to bufferSize
+backend-ranked/unknown-field-1	rejected	Error from server (BadRequest): error when creating "STDIN": Fleet in version "v1" cannot be handled as a Fleet: strict decoding error: unknown field "spec.replica"
+backend-ranked/unknown-field-2	rejected	Error from server (BadRequest): error when creating "STDIN": FleetAutoscaler in version "v1" cannot be handled as a FleetAutoscaler: strict decoding error: unknown field "spec.policy.counter.buffersize"
+backend-tournament/alloc-capacity-unreachable-1	accepted	
+backend-tournament/alloc-label-typo-1	accepted	
+backend-tournament/alloc-list-key-typo-1	accepted	
+backend-tournament/alpha-gated-field-1	rejected	The Fleet "tournament" is invalid: spec.template.spec.players: Forbidden: Value cannot be set unless feature flag PlayerTracking is enabled
+backend-tournament/benign-add-label-1	accepted	
+backend-tournament/benign-image-tag-1	accepted	
+backend-tournament/benign-raise-capacity-1	accepted	
+backend-tournament/benign-rename-fleet-1	accepted	
+backend-tournament/benign-replicas-1	accepted	
+backend-tournament/duplicate-name-1	accepted	
+backend-tournament/fas-fleetname-typo-1	accepted	
+backend-tournament/fas-list-key-typo-1	accepted	
+backend-tournament/fleet-label-drift-1	accepted	
+backend-tournament/invalid-bounds-1	rejected	The FleetAutoscaler "tournament-teams" is invalid:  * spec.policy.list.minCapacity: Invalid value: 32: minCapacity should be smaller than maxCapacity * spec.policy.list.maxCapacity: Invalid value: 31: maxCapacity should be bigger than or equal to bufferSize
+backend-tournament/unknown-field-1	rejected	Error from server (BadRequest): error when creating "STDIN": Fleet in version "v1" cannot be handled as a Fleet: strict decoding error: unknown field "spec.replica"
+backend-tournament/unknown-field-2	rejected	Error from server (BadRequest): error when creating "STDIN": FleetAutoscaler in version "v1" cannot be handled as a FleetAutoscaler: strict decoding error: unknown field "spec.policy.list.buffersize"
+example-buffer/alpha-gated-field-1	rejected	The Fleet "fleet-example" is invalid: spec.template.spec.players: Forbidden: Value cannot be set unless feature flag PlayerTracking is enabled
+example-buffer/benign-add-label-1	accepted	
+example-buffer/benign-image-tag-1	accepted	
+example-buffer/benign-raise-capacity-1	accepted	
+example-buffer/benign-rename-fleet-1	accepted	
+example-buffer/benign-replicas-1	accepted	
+example-buffer/duplicate-name-1	accepted	
+example-buffer/fas-fleetname-typo-1	accepted	
+example-buffer/invalid-bounds-1	rejected	The FleetAutoscaler "fleet-autoscaler-example" is invalid: spec.policy.buffer.minReplicas: Invalid value: 10: minReplicas should be smaller than maxReplicas
+example-buffer/unknown-field-1	rejected	Error from server (BadRequest): error when creating "STDIN": Fleet in version "v1" cannot be handled as a Fleet: strict decoding error: unknown field "spec.replica"
+example-buffer/unknown-field-2	rejected	Error from server (BadRequest): error when creating "STDIN": FleetAutoscaler in version "v1" cannot be handled as a FleetAutoscaler: strict decoding error: unknown field "spec.policy.buffer.buffersize"
+example-chain/alpha-gated-field-1	rejected	The Fleet "fleet-example" is invalid: spec.template.spec.players: Forbidden: Value cannot be set unless feature flag PlayerTracking is enabled
+example-chain/benign-add-label-1	accepted	
+example-chain/benign-image-tag-1	accepted	
+example-chain/benign-raise-capacity-1	accepted	
+example-chain/benign-rename-fleet-1	accepted	
+example-chain/benign-replicas-1	accepted	
+example-chain/duplicate-name-1	accepted	
+example-chain/fas-counter-key-typo-1	accepted	
+example-chain/fas-fleetname-typo-1	accepted	
+example-chain/invalid-bounds-1	accepted	
+example-chain/unknown-field-1	rejected	Error from server (BadRequest): error when creating "STDIN": Fleet in version "v1" cannot be handled as a Fleet: strict decoding error: unknown field "spec.replica"
+example-chain/unknown-field-2	rejected	Error from server (BadRequest): error when creating "STDIN": FleetAutoscaler in version "v1" cannot be handled as a FleetAutoscaler: strict decoding error: unknown field "spec.policy.chain[0].schedule.policy.buffer.buffersize"
+example-counter/alloc-capacity-unreachable-1	accepted	
+example-counter/alloc-counter-key-typo-1	accepted	
+example-counter/alloc-label-typo-1	accepted	
+example-counter/alloc-list-key-typo-1	accepted	
+example-counter/alpha-gated-field-1	rejected	The Fleet "fleet-example" is invalid: spec.template.spec.players: Forbidden: Value cannot be set unless feature flag PlayerTracking is enabled
+example-counter/benign-add-label-1	accepted	
+example-counter/benign-image-tag-1	accepted	
+example-counter/benign-raise-capacity-1	accepted	
+example-counter/benign-rename-fleet-1	accepted	
+example-counter/benign-replicas-1	accepted	
+example-counter/duplicate-name-1	accepted	
+example-counter/fas-counter-key-typo-1	accepted	
+example-counter/fas-fleetname-typo-1	accepted	
+example-counter/fleet-label-drift-1	accepted	
+example-counter/invalid-bounds-1	rejected	The FleetAutoscaler "fleet-autoscaler-counter" is invalid: spec.policy.counter.minCapacity: Invalid value: 10: minCapacity should be smaller than maxCapacity
+example-counter/unknown-field-1	rejected	Error from server (BadRequest): error when creating "STDIN": Fleet in version "v1" cannot be handled as a Fleet: strict decoding error: unknown field "spec.replica"
+example-counter/unknown-field-2	rejected	Error from server (BadRequest): error when creating "STDIN": FleetAutoscaler in version "v1" cannot be handled as a FleetAutoscaler: strict decoding error: unknown field "spec.policy.counter.buffersize"
+example-cpp/alpha-gated-field-1	rejected	The Fleet "cpp-simple-jdmmn" is invalid: spec.template.spec.players: Forbidden: Value cannot be set unless feature flag PlayerTracking is enabled
+example-cpp/benign-add-label-1	accepted	
+example-cpp/benign-image-tag-1	accepted	
+example-cpp/benign-replicas-1	accepted	
+example-cpp/unknown-field-1	rejected	Error from server (BadRequest): error when creating "STDIN": Fleet in version "v1" cannot be handled as a Fleet: strict decoding error: unknown field "spec.replica"
+example-list/alpha-gated-field-1	rejected	The Fleet "fleet-example" is invalid: spec.template.spec.players: Forbidden: Value cannot be set unless feature flag PlayerTracking is enabled
+example-list/benign-add-label-1	accepted	
+example-list/benign-image-tag-1	accepted	
+example-list/benign-raise-capacity-1	accepted	
+example-list/benign-rename-fleet-1	accepted	
+example-list/benign-replicas-1	accepted	
+example-list/duplicate-name-1	accepted	
+example-list/fas-fleetname-typo-1	accepted	
+example-list/fas-list-key-typo-1	accepted	
+example-list/invalid-bounds-1	rejected	The FleetAutoscaler "fleet-autoscaler-list" is invalid: spec.policy.list.minCapacity: Invalid value: 10: minCapacity should be smaller than maxCapacity
+example-list/unknown-field-1	rejected	Error from server (BadRequest): error when creating "STDIN": Fleet in version "v1" cannot be handled as a Fleet: strict decoding error: unknown field "spec.replica"
+example-list/unknown-field-2	rejected	Error from server (BadRequest): error when creating "STDIN": FleetAutoscaler in version "v1" cannot be handled as a FleetAutoscaler: strict decoding error: unknown field "spec.policy.list.buffersize"
+example-schedule/alpha-gated-field-1	rejected	The Fleet "fleet-example" is invalid: spec.template.spec.players: Forbidden: Value cannot be set unless feature flag PlayerTracking is enabled
+example-schedule/benign-add-label-1	accepted	
+example-schedule/benign-image-tag-1	accepted	
+example-schedule/benign-raise-capacity-1	accepted	
+example-schedule/benign-rename-fleet-1	accepted	
+example-schedule/benign-replicas-1	accepted	
+example-schedule/duplicate-name-1	accepted	
+example-schedule/fas-fleetname-typo-1	accepted	
+example-schedule/invalid-bounds-1	accepted	
+example-schedule/unknown-field-1	rejected	Error from server (BadRequest): error when creating "STDIN": Fleet in version "v1" cannot be handled as a Fleet: strict decoding error: unknown field "spec.replica"
+example-schedule/unknown-field-2	rejected	Error from server (BadRequest): error when creating "STDIN": FleetAutoscaler in version "v1" cannot be handled as a FleetAutoscaler: strict decoding error: unknown field "spec.policy.schedule.policy.buffer.buffersize"
+example-simple-game-server/alpha-gated-field-1	rejected	The Fleet "simple-game-server" is invalid: spec.template.spec.players: Forbidden: Value cannot be set unless feature flag PlayerTracking is enabled
+example-simple-game-server/benign-add-label-1	accepted	
+example-simple-game-server/benign-image-tag-1	accepted	
+example-simple-game-server/benign-rename-fleet-1	accepted	
+example-simple-game-server/benign-replicas-1	accepted	
+example-simple-game-server/duplicate-name-1	accepted	
+example-simple-game-server/fas-fleetname-typo-1	accepted	
+example-simple-game-server/invalid-bounds-1	rejected	The FleetAutoscaler "simple-game-server-autoscaler" is invalid: spec.policy.buffer.maxReplicas: Invalid value: -1: spec.policy.buffer.maxReplicas in body should be greater than or equal to 1
+example-simple-game-server/unknown-field-1	rejected	Error from server (BadRequest): error when creating "STDIN": Fleet in version "v1" cannot be handled as a Fleet: strict decoding error: unknown field "spec.replica"
+example-simple-game-server/unknown-field-2	rejected	Error from server (BadRequest): error when creating "STDIN": FleetAutoscaler in version "v1" cannot be handled as a FleetAutoscaler: strict decoding error: unknown field "spec.policy.buffer.buffersize"
+example-supertuxkart/alpha-gated-field-1	rejected	The Fleet "supertuxkart" is invalid: spec.template.spec.players: Forbidden: Value cannot be set unless feature flag PlayerTracking is enabled
+example-supertuxkart/benign-add-label-1	accepted	
+example-supertuxkart/benign-image-tag-1	accepted	
+example-supertuxkart/benign-rename-fleet-1	accepted	
+example-supertuxkart/benign-replicas-1	accepted	
+example-supertuxkart/duplicate-name-1	accepted	
+example-supertuxkart/unknown-field-1	rejected	Error from server (BadRequest): error when creating "STDIN": Fleet in version "v1" cannot be handled as a Fleet: strict decoding error: unknown field "spec.replica"
+example-webhook/alpha-gated-field-1	rejected	The Fleet "simple-game-server" is invalid: spec.template.spec.players: Forbidden: Value cannot be set unless feature flag PlayerTracking is enabled
+example-webhook/benign-add-label-1	accepted	
+example-webhook/benign-image-tag-1	accepted	
+example-webhook/benign-rename-fleet-1	accepted	
+example-webhook/benign-replicas-1	accepted	
+example-webhook/duplicate-name-1	accepted	
+example-webhook/fas-fleetname-typo-1	accepted	
+example-webhook/unknown-field-1	rejected	Error from server (BadRequest): error when creating "STDIN": Fleet in version "v1" cannot be handled as a Fleet: strict decoding error: unknown field "spec.replica"
+example-xonotic/alpha-gated-field-1	rejected	The Fleet "xonotic" is invalid: spec.template.spec.players: Forbidden: Value cannot be set unless feature flag PlayerTracking is enabled
+example-xonotic/benign-add-label-1	accepted	
+example-xonotic/benign-image-tag-1	accepted	
+example-xonotic/benign-rename-fleet-1	accepted	
+example-xonotic/benign-replicas-1	accepted	
+example-xonotic/duplicate-name-1	accepted	
+example-xonotic/fas-fleetname-typo-1	accepted	
+example-xonotic/invalid-bounds-1	rejected	The FleetAutoscaler "xonotic-autoscaler" is invalid: spec.policy.buffer.maxReplicas: Invalid value: -1: spec.policy.buffer.maxReplicas in body should be greater than or equal to 1
+example-xonotic/unknown-field-1	rejected	Error from server (BadRequest): error when creating "STDIN": Fleet in version "v1" cannot be handled as a Fleet: strict decoding error: unknown field "spec.replica"
+example-xonotic/unknown-field-2	rejected	Error from server (BadRequest): error when creating "STDIN": FleetAutoscaler in version "v1" cannot be handled as a FleetAutoscaler: strict decoding error: unknown field "spec.policy.buffer.buffersize"
