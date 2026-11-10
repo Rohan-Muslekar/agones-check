@@ -1,0 +1,44 @@
+# Tournament servers keep a list of registered teams and scale on free slots.
+apiVersion: agones.dev/v1
+kind: Fleet
+metadata:
+  name: tournament
+  namespace: events
+spec:
+  replicas: 2
+  scheduling: Distributed
+  template:
+    metadata:
+      labels:
+        mode: tournament
+        tier: premium
+    spec:
+      ports:
+        - name: default
+          containerPort: 7654
+      lists:
+        teams:
+          capacity: 16
+      counters:
+        spectators:
+          capacity: 200
+      template:
+        spec:
+          containers:
+            - name: game
+              image: registry.example.com/cricket/server:2.14.0
+---
+apiVersion: autoscaling.agones.dev/v1
+kind: FleetAutoscaler
+metadata:
+  name: tournament-teams
+  namespace: events
+spec:
+  fleetName: tournament
+  policy:
+    type: List
+    list:
+      key: teams
+      bufferSize: 32
+      minCapacity: 32
+      maxCapacity: 320

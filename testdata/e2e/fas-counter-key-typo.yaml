@@ -1,0 +1,10 @@
+apiVersion: autoscaling.agones.dev/v1
+kind: FleetAutoscaler
+metadata:
+  name: typo-counter
+  namespace: e2e
+spec:
+  fleetName: arena
+  policy:
+    type: Counter
+    counter: {key: room, bufferSize: 2, minCapacity: 4, maxCapacity: 40}

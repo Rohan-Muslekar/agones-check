@@ -1,0 +1,13 @@
+# Same shape as Agones' examples/listfleetautoscaler.yaml: the list capacity
+# is left null in the Fleet, so the CRD defaults it to 1000, above
+# maxCapacity 100.
+apiVersion: autoscaling.agones.dev/v1
+kind: FleetAutoscaler
+metadata:
+  name: list-capacity
+  namespace: e2e
+spec:
+  fleetName: arena
+  policy:
+    type: List
+    list: {key: players, bufferSize: 5, minCapacity: 10, maxCapacity: 100}

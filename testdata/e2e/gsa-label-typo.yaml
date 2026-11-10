@@ -1,0 +1,8 @@
+apiVersion: allocation.agones.dev/v1
+kind: GameServerAllocation
+metadata:
+  generateName: typo-
+  namespace: e2e
+spec:
+  selectors:
+    - matchLabels: {mode: rankd}

@@ -1,0 +1,42 @@
+---
+# Copyright Contributors to Agones a Series of LF Projects, LLC.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: create-gs-
+  namespace: agones-system
+spec:
+  backoffLimit: 5
+  activeDeadlineSeconds: 1000
+  template:
+    spec:
+      serviceAccountName: agones-controller
+      containers:
+        - name: create-gameserver
+          resources:
+            limits:
+              cpu: 500m
+              ephemeral-storage: 1Gi
+              memory: 2Gi
+            requests:
+              cpu: 500m
+              ephemeral-storage: 1Gi
+              memory: 2Gi
+          image: us-docker.pkg.dev/agones-images/examples/crd-client:0.25
+          imagePullPolicy: Always
+          env:
+            - name: GAMESERVER_IMAGE
+              value: us-docker.pkg.dev/agones-images/examples/simple-game-server:0.43
+      restartPolicy: Never

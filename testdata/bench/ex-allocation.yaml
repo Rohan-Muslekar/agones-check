@@ -1,0 +1,21 @@
+# Allocation written for Agones' examples/fleet.yaml (fleet-example), so the
+# example Fleet and its autoscalers form a complete deployment.
+apiVersion: allocation.agones.dev/v1
+kind: GameServerAllocation
+metadata:
+  generateName: example-
+spec:
+  selectors:
+    - matchLabels:
+        agones.dev/fleet: fleet-example
+        foo: bar
+      counters:
+        rooms:
+          minAvailable: 1
+      lists:
+        players:
+          minAvailable: 1
+  counters:
+    rooms:
+      action: Increment
+      amount: 1

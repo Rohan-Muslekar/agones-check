@@ -1,0 +1,25 @@
+# Schedule policy with only between.start. Agones documents end as optional
+# ("If not set, the policy is always eligible"), but the mutating webhook
+# writes the unset time as null and the API server rejects the object.
+apiVersion: autoscaling.agones.dev/v1
+kind: FleetAutoscaler
+metadata:
+  name: no-end
+  namespace: e2e
+spec:
+  fleetName: arena
+  policy:
+    type: Schedule
+    schedule:
+      between:
+        start: "2026-01-01T00:00:00Z"
+      activePeriod:
+        timezone: "America/Toronto"
+        startCron: "0 18 * * 6"
+        duration: "6h"
+      policy:
+        type: Buffer
+        buffer:
+          bufferSize: 1
+          minReplicas: 1
+          maxReplicas: 4

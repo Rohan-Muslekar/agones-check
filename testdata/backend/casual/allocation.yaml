@@ -1,0 +1,12 @@
+apiVersion: allocation.agones.dev/v1
+kind: GameServerAllocation
+metadata:
+  generateName: casual-
+  namespace: game
+spec:
+  required:
+    matchLabels:
+      mode: casual
+  preferred:
+    - matchLabels:
+        agones.dev/fleet: lobby

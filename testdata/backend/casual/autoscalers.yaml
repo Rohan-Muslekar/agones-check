@@ -1,0 +1,46 @@
+apiVersion: autoscaling.agones.dev/v1
+kind: FleetAutoscaler
+metadata:
+  name: lobby-buffer
+  namespace: game
+spec:
+  fleetName: lobby
+  policy:
+    type: Buffer
+    buffer:
+      bufferSize: 3
+      minReplicas: 3
+      maxReplicas: 50
+---
+apiVersion: autoscaling.agones.dev/v1
+kind: FleetAutoscaler
+metadata:
+  name: practice-weekend
+  namespace: game
+spec:
+  fleetName: practice
+  policy:
+    type: Chain
+    chain:
+      - id: weekend-evenings
+        type: Schedule
+        schedule:
+          between:
+            start: "2026-01-01T00:00:00Z"
+            end: "2100-01-01T00:00:00Z"
+          activePeriod:
+            timezone: "America/Toronto"
+            startCron: "0 18 * * 6,0"
+            duration: "5h"
+          policy:
+            type: Buffer
+            buffer:
+              bufferSize: 5
+              minReplicas: 5
+              maxReplicas: 30
+      - id: default
+        type: Buffer
+        buffer:
+          bufferSize: 1
+          minReplicas: 1
+          maxReplicas: 10

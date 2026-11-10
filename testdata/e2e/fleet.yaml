@@ -1,0 +1,32 @@
+# Small fleet for runtime tests: Agones' simple-game-server image, one
+# counter and one list, labelled for allocation.
+apiVersion: agones.dev/v1
+kind: Fleet
+metadata:
+  name: arena
+  namespace: e2e
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        mode: ranked
+    spec:
+      ports:
+        - name: default
+          containerPort: 7654
+      counters:
+        rooms:
+          count: 0
+          capacity: 4
+      lists:
+        players:
+          capacity:
+      template:
+        spec:
+          containers:
+            - name: simple-game-server
+              image: us-docker.pkg.dev/agones-images/examples/simple-game-server:0.44
+              resources:
+                requests: {memory: 32Mi, cpu: 20m}
+                limits: {memory: 64Mi, cpu: 100m}

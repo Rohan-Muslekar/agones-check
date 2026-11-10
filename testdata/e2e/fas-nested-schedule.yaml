@@ -1,0 +1,20 @@
+# Buffer policy nested in a Schedule with maxReplicas below minReplicas.
+apiVersion: autoscaling.agones.dev/v1
+kind: FleetAutoscaler
+metadata:
+  name: nested-bad
+  namespace: e2e
+spec:
+  fleetName: arena
+  policy:
+    type: Schedule
+    schedule:
+      between:
+        start: "2026-01-01T00:00:00Z"
+        end: "2100-01-01T00:00:00Z"
+      activePeriod:
+        startCron: "* * * * *"
+        duration: ""
+      policy:
+        type: Buffer
+        buffer: {bufferSize: 2, minReplicas: 5, maxReplicas: 1}

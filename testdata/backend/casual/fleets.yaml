@@ -1,0 +1,43 @@
+# Casual play: a lobby fleet scaled by a ready buffer, and a practice fleet
+# that only runs on weekend evenings.
+apiVersion: agones.dev/v1
+kind: Fleet
+metadata:
+  name: lobby
+  namespace: game
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        mode: casual
+    spec:
+      ports:
+        - name: default
+          containerPort: 7654
+      template:
+        spec:
+          containers:
+            - name: game
+              image: registry.example.com/cricket/server:2.14.0
+---
+apiVersion: agones.dev/v1
+kind: Fleet
+metadata:
+  name: practice
+  namespace: game
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        mode: practice
+    spec:
+      ports:
+        - name: default
+          containerPort: 7654
+      template:
+        spec:
+          containers:
+            - name: game
+              image: registry.example.com/cricket/server:2.14.0

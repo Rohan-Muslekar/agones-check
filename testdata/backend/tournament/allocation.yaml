@@ -1,0 +1,22 @@
+apiVersion: allocation.agones.dev/v1
+kind: GameServerAllocation
+metadata:
+  generateName: tournament-
+  namespace: events
+spec:
+  selectors:
+    - matchLabels:
+        mode: tournament
+        tier: premium
+      lists:
+        teams:
+          minAvailable: 2
+  lists:
+    teams:
+      addValues:
+        - team-red
+        - team-blue
+  counters:
+    spectators:
+      action: Increment
+      amount: 0

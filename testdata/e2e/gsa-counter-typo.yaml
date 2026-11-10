@@ -1,0 +1,10 @@
+apiVersion: allocation.agones.dev/v1
+kind: GameServerAllocation
+metadata:
+  generateName: counter-typo-
+  namespace: e2e
+spec:
+  selectors:
+    - matchLabels: {mode: ranked}
+      counters:
+        room: {minAvailable: 1}

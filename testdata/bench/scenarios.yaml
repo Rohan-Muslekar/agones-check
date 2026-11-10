@@ -1,0 +1,30 @@
+# Benchmark scenarios: each is one deployable set of manifests that passes
+# every check in the prod environment. Paths are relative to the repo root.
+- name: backend-ranked
+  files: [testdata/backend/ranked]
+- name: backend-casual
+  files: [testdata/backend/casual]
+- name: backend-tournament
+  files: [testdata/backend/tournament]
+- name: example-counter
+  files: [testdata/agones-examples/fleet.yaml, testdata/agones-examples/counterfleetautoscaler.yaml, testdata/bench/ex-allocation.yaml]
+- name: example-list
+  files: [testdata/agones-examples/fleet.yaml, testdata/agones-examples/listfleetautoscaler.yaml]
+- name: example-buffer
+  files: [testdata/agones-examples/fleet.yaml, testdata/agones-examples/fleetautoscaler.yaml]
+- name: example-schedule
+  files: [testdata/agones-examples/fleet.yaml, testdata/agones-examples/schedulefleetautoscaler.yaml]
+- name: example-chain
+  files: [testdata/agones-examples/fleet.yaml, testdata/agones-examples/chainfleetautoscaler.yaml]
+- name: example-webhook
+  files: [testdata/agones-examples/simple-game-server/fleet.yaml, testdata/agones-examples/webhookfleetautoscaler.yaml]
+- name: example-simple-game-server
+  files: [testdata/agones-examples/simple-game-server/fleet.yaml, testdata/agones-examples/simple-game-server/fleetautoscaler.yaml]
+- name: example-xonotic
+  files: [testdata/agones-examples/xonotic/fleet.yaml, testdata/agones-examples/xonotic/fleetautoscaler.yaml]
+- name: example-supertuxkart
+  files: [testdata/agones-examples/supertuxkart/fleet.yaml, testdata/agones-examples/supertuxkart/gameserverallocation.yaml]
+- name: example-cpp
+  files: [testdata/agones-examples/cpp-simple/fleet.yaml]
+- name: example-gameserver
+  files: [testdata/agones-examples/gameserver.yaml]
