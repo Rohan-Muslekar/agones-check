@@ -1,0 +1,365 @@
+{
+ "1.40.0": {
+  "alphaGates": [
+   "CountsAndLists",
+   "GKEAutopilotExtendedDurationPods",
+   "PlayerAllocationFilter",
+   "PlayerTracking"
+  ],
+  "betaGates": [
+   "DisableResyncOnSDKServer"
+  ]
+ },
+ "1.41.0": {
+  "alphaGates": [
+   "AutopilotPassthroughPort",
+   "GKEAutopilotExtendedDurationPods",
+   "PlayerAllocationFilter",
+   "PlayerTracking",
+   "PortPolicyNone",
+   "PortRanges",
+   "RollingUpdateFix"
+  ],
+  "betaGates": [
+   "CountsAndLists",
+   "DisableResyncOnSDKServer"
+  ]
+ },
+ "1.42.0": {
+  "alphaGates": [
+   "AutopilotPassthroughPort",
+   "GKEAutopilotExtendedDurationPods",
+   "PlayerAllocationFilter",
+   "PlayerTracking",
+   "PortPolicyNone",
+   "PortRanges",
+   "RollingUpdateFix"
+  ],
+  "betaGates": [
+   "CountsAndLists",
+   "DisableResyncOnSDKServer"
+  ]
+ },
+ "1.43.0": {
+  "alphaGates": [
+   "GKEAutopilotExtendedDurationPods",
+   "PlayerAllocationFilter",
+   "PlayerTracking",
+   "PortPolicyNone",
+   "PortRanges",
+   "RollingUpdateFix"
+  ],
+  "betaGates": [
+   "AutopilotPassthroughPort",
+   "CountsAndLists",
+   "DisableResyncOnSDKServer"
+  ]
+ },
+ "1.44.0": {
+  "alphaGates": [
+   "PlayerAllocationFilter",
+   "PlayerTracking",
+   "PortPolicyNone",
+   "PortRanges",
+   "RollingUpdateFix",
+   "ScheduledAutoscaler"
+  ],
+  "betaGates": [
+   "AutopilotPassthroughPort",
+   "CountsAndLists",
+   "DisableResyncOnSDKServer",
+   "GKEAutopilotExtendedDurationPods"
+  ]
+ },
+ "1.45.0": {
+  "alphaGates": [
+   "PlayerAllocationFilter",
+   "PlayerTracking",
+   "PortPolicyNone",
+   "PortRanges",
+   "RollingUpdateFix",
+   "ScheduledAutoscaler"
+  ],
+  "betaGates": [
+   "AutopilotPassthroughPort",
+   "CountsAndLists",
+   "DisableResyncOnSDKServer",
+   "GKEAutopilotExtendedDurationPods"
+  ]
+ },
+ "1.46.0": {
+  "alphaGates": [
+   "PlayerAllocationFilter",
+   "PlayerTracking",
+   "PortPolicyNone",
+   "PortRanges",
+   "RollingUpdateFix",
+   "ScheduledAutoscaler"
+  ],
+  "betaGates": [
+   "AutopilotPassthroughPort",
+   "CountsAndLists",
+   "DisableResyncOnSDKServer",
+   "GKEAutopilotExtendedDurationPods"
+  ]
+ },
+ "1.47.0": {
+  "alphaGates": [
+   "PlayerAllocationFilter",
+   "PlayerTracking",
+   "PortPolicyNone",
+   "PortRanges",
+   "RollingUpdateFix",
+   "ScheduledAutoscaler"
+  ],
+  "betaGates": [
+   "AutopilotPassthroughPort",
+   "CountsAndLists",
+   "DisableResyncOnSDKServer",
+   "GKEAutopilotExtendedDurationPods"
+  ]
+ },
+ "1.48.0": {
+  "alphaGates": [
+   "PlayerAllocationFilter",
+   "PlayerTracking",
+   "PortPolicyNone",
+   "PortRanges",
+   "RollingUpdateFix",
+   "ScheduledAutoscaler"
+  ],
+  "betaGates": [
+   "AutopilotPassthroughPort",
+   "CountsAndLists",
+   "DisableResyncOnSDKServer",
+   "GKEAutopilotExtendedDurationPods"
+  ]
+ },
+ "1.49.0": {
+  "alphaGates": [
+   "FleetAutoscaleRequestMetaData",
+   "PlayerAllocationFilter",
+   "PlayerTracking",
+   "RollingUpdateFix",
+   "ScheduledAutoscaler",
+   "SidecarContainers"
+  ],
+  "betaGates": [
+   "AutopilotPassthroughPort",
+   "CountsAndLists",
+   "GKEAutopilotExtendedDurationPods",
+   "PortPolicyNone",
+   "PortRanges"
+  ]
+ },
+ "1.50.0": {
+  "alphaGates": [
+   "FleetAutoscaleRequestMetaData",
+   "PlayerAllocationFilter",
+   "PlayerTracking",
+   "ScheduledAutoscaler",
+   "SidecarContainers"
+  ],
+  "betaGates": [
+   "AutopilotPassthroughPort",
+   "CountsAndLists",
+   "GKEAutopilotExtendedDurationPods",
+   "PortPolicyNone",
+   "PortRanges",
+   "RollingUpdateFix"
+  ]
+ },
+ "1.51.0": {
+  "alphaGates": [
+   "FleetAutoscaleRequestMetaData",
+   "PlayerAllocationFilter",
+   "PlayerTracking",
+   "SidecarContainers"
+  ],
+  "betaGates": [
+   "AutopilotPassthroughPort",
+   "CountsAndLists",
+   "GKEAutopilotExtendedDurationPods",
+   "PortPolicyNone",
+   "PortRanges",
+   "RollingUpdateFix",
+   "ScheduledAutoscaler"
+  ]
+ },
+ "1.52.2": {
+  "alphaGates": [
+   "FleetAutoscaleRequestMetaData",
+   "PlayerAllocationFilter",
+   "PlayerTracking",
+   "SidecarContainers"
+  ],
+  "betaGates": [
+   "AutopilotPassthroughPort",
+   "CountsAndLists",
+   "GKEAutopilotExtendedDurationPods",
+   "PortPolicyNone",
+   "PortRanges",
+   "RollingUpdateFix",
+   "ScheduledAutoscaler"
+  ]
+ },
+ "1.53.0": {
+  "alphaGates": [
+   "FleetAutoscaleRequestMetaData",
+   "PlayerAllocationFilter",
+   "PlayerTracking",
+   "SidecarContainers"
+  ],
+  "betaGates": [
+   "AutopilotPassthroughPort",
+   "CountsAndLists",
+   "GKEAutopilotExtendedDurationPods",
+   "PortPolicyNone",
+   "PortRanges",
+   "RollingUpdateFix",
+   "ScheduledAutoscaler"
+  ]
+ },
+ "1.54.0": {
+  "alphaGates": [
+   "FleetAutoscaleRequestMetaData",
+   "PlayerAllocationFilter",
+   "PlayerTracking",
+   "SidecarContainers",
+   "WasmAutoscaler"
+  ],
+  "betaGates": [
+   "CountsAndLists",
+   "GKEAutopilotExtendedDurationPods",
+   "PortPolicyNone",
+   "PortRanges",
+   "RollingUpdateFix",
+   "ScheduledAutoscaler"
+  ]
+ },
+ "1.55.0": {
+  "alphaGates": [
+   "PlayerAllocationFilter",
+   "PlayerTracking",
+   "SidecarContainers",
+   "WasmAutoscaler"
+  ],
+  "betaGates": [
+   "CountsAndLists",
+   "GKEAutopilotExtendedDurationPods",
+   "PortPolicyNone",
+   "PortRanges",
+   "RollingUpdateFix",
+   "ScheduledAutoscaler",
+   "FleetAutoscaleRequestMetaData"
+  ]
+ },
+ "1.56.0": {
+  "alphaGates": [
+   "PlayerAllocationFilter",
+   "PlayerTracking",
+   "WasmAutoscaler"
+  ],
+  "betaGates": [
+   "CountsAndLists",
+   "GKEAutopilotExtendedDurationPods",
+   "PortPolicyNone",
+   "PortRanges",
+   "RollingUpdateFix",
+   "ScheduledAutoscaler",
+   "FleetAutoscaleRequestMetaData",
+   "SidecarContainers"
+  ]
+ },
+ "1.57.0": {
+  "alphaGates": [
+   "PlayerAllocationFilter",
+   "PlayerTracking",
+   "WasmAutoscaler"
+  ],
+  "betaGates": [
+   "CountsAndLists",
+   "GKEAutopilotExtendedDurationPods",
+   "PortPolicyNone",
+   "PortRanges",
+   "RollingUpdateFix",
+   "ScheduledAutoscaler",
+   "FleetAutoscaleRequestMetaData",
+   "SidecarContainers"
+  ]
+ },
+ "1.58.0": {
+  "alphaGates": [
+   "PlayerAllocationFilter",
+   "PlayerTracking",
+   "WasmAutoscaler"
+  ],
+  "betaGates": [
+   "CountsAndLists",
+   "GKEAutopilotExtendedDurationPods",
+   "PortPolicyNone",
+   "PortRanges",
+   "RollingUpdateFix",
+   "ScheduledAutoscaler",
+   "FleetAutoscaleRequestMetaData",
+   "SidecarContainers"
+  ]
+ },
+ "1.59.0": {
+  "alphaGates": [
+   "PlayerAllocationFilter",
+   "PlayerTracking",
+   "WasmAutoscaler"
+  ],
+  "betaGates": [
+   "CountsAndLists",
+   "GKEAutopilotExtendedDurationPods",
+   "PortPolicyNone",
+   "ScheduledAutoscaler",
+   "FleetAutoscaleRequestMetaData",
+   "SidecarContainers"
+  ]
+ },
+ "1.60.0": {
+  "alphaGates": [
+   "PlayerAllocationFilter",
+   "PlayerTracking",
+   "WasmAutoscaler"
+  ],
+  "betaGates": [
+   "CountsAndLists",
+   "GKEAutopilotExtendedDurationPods",
+   "ScheduledAutoscaler",
+   "FleetAutoscaleRequestMetaData",
+   "SidecarContainers"
+  ]
+ },
+ "1.61.0": {
+  "alphaGates": [
+   "PlayerAllocationFilter",
+   "PlayerTracking",
+   "WasmAutoscaler"
+  ],
+  "betaGates": [
+   "CountsAndLists",
+   "GKEAutopilotExtendedDurationPods",
+   "ScheduledAutoscaler",
+   "FleetAutoscaleRequestMetaData",
+   "SidecarContainers"
+  ]
+ },
+ "Dev": {
+  "alphaGates": [
+   "PlayerAllocationFilter",
+   "PlayerTracking",
+   "WasmAutoscaler"
+  ],
+  "betaGates": [
+   "CountsAndLists",
+   "GKEAutopilotExtendedDurationPods",
+   "ScheduledAutoscaler",
+   "FleetAutoscaleRequestMetaData",
+   "SidecarContainers"
+  ]
+ }
+}
