@@ -1,0 +1,3 @@
+# Production cluster still on Agones 1.59 with default gates.
+name: prod-1.59
+agonesVersion: "1.59"

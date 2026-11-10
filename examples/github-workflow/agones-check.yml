@@ -1,0 +1,16 @@
+# Copy into .github/workflows/ of a repository that holds Agones manifests.
+# Findings show up as annotations on the pull request diff, and the check
+# fails when a change would break any of the listed environments.
+name: agones-check
+on:
+  pull_request:
+    paths: ["deploy/agones/**"]
+jobs:
+  agones-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: Rohan-Muslekar/agones-check@main
+        with:
+          paths: deploy/agones
+          environments: deploy/profiles/prod.yaml,deploy/profiles/staging.yaml,dev

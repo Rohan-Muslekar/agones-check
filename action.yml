@@ -1,0 +1,32 @@
+name: agones-check
+description: Check Agones manifests for cross-resource and cross-environment mistakes before they are deployed.
+branding:
+  icon: check-circle
+  color: blue
+inputs:
+  paths:
+    description: Space-separated manifest files or directories to check.
+    required: true
+  environments:
+    description: Comma-separated environment profiles (files or built-ins such as prod, dev, beta-off, 1.54).
+    default: prod
+  fail-on:
+    description: Fail the job on findings of this severity or worse (error, warning, never).
+    default: error
+  version:
+    description: agones-check version to install (a git ref of this repository).
+    default: main
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-go@v5
+      with:
+        go-version: "1.26"
+        cache: false
+    - name: Install agones-check
+      shell: bash
+      run: go install github.com/Rohan-Muslekar/agones-check/cmd/agones-check@${{ inputs.version }}
+    - name: Check manifests
+      shell: bash
+      run: |
+        agones-check -o github -e "${{ inputs.environments }}" --fail-on "${{ inputs.fail-on }}" ${{ inputs.paths }}

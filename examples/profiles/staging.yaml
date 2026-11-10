@@ -1,0 +1,6 @@
+# Staging runs the next Agones release with one alpha feature on, to try it
+# before production.
+name: staging
+agonesVersion: "1.61"
+featureGates:
+  PlayerAllocationFilter: true

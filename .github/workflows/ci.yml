@@ -1,0 +1,26 @@
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - run: go vet ./...
+      - run: go test -race -coverprofile=coverage.out ./...
+      - run: go run ./cmd/bench -out /tmp/results && cat /tmp/results/mutation.md >> "$GITHUB_STEP_SUMMARY"
+  # Dogfood: the action from this repository against the sample manifests.
+  action:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./
+        with:
+          paths: testdata/backend
+          environments: prod,dev,1.54
+          version: ${{ github.sha }}
