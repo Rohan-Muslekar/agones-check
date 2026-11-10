@@ -49,37 +49,54 @@ change unless the results are regenerated. Rohan merges, does the final read, an
 | VI Evaluation (RQ1–RQ4), VII Discussion, threats | Evaluation, results & discussion | Emmanuel |
 | VIII Conclusion, references, final proofread | Writing | all, Rohan final pass |
 
-## Before submission (Nov 9)
+## Tasks by person
 
-- [ ] Rohan: push to `github.com/Rohan-Muslekar/agones-check` (the report links to it), add Ankit and Emmanuel as
-      collaborators, and tag the commit: `git tag report-2026-11-09`.
-- [ ] Everyone: edit pass on your report sections in Overleaf.
-- [ ] Rohan: final read, export PDF, submit on Canvas.
-
-## Polishing left (before the demo, not needed for the report)
+Everything here is open work. Tick a box when done and mention it in the PR. Tasks marked **(report)** need to be
+finished before Nov 9; the others are for the demo and the repo.
 
 ### Rohan
-- [ ] Optional: re-run `make oracle` and `make e2e` on a fresh kind cluster before the demo, to check nothing drifted.
 
-### Ankit
-- [ ] Open upstream Agones issues for the three problems the tool found (stretch goal in the proposal):
-      `SchedulePolicy.ValidateSchedulePolicy` never validates its nested `policy` (AC004);
-      a Schedule policy without `between.start` or `between.end` is rejected with `must be of type string: "null"`
-      although the field docs say "If not set, the policy is always eligible" (AC005; `Between` uses `metav1.Time`
-      without `omitempty`, so the mutating webhook writes null; repro in `testdata/e2e/fas-schedule-no-end.yaml`); and
-      `examples/listfleetautoscaler.yaml` sets `maxCapacity: 100` while `examples/fleet.yaml` leaves the list capacity
-      empty, which the CRD defaults to 1000 (AC104). Link the issues in the README.
+- [ ] **(report)** Push the repo, add Ankit and Emmanuel as collaborators, tag `report-2026-11-09`.
+- [ ] **(report)** Upload `Project/report/latex/` to a shared Overleaf project and share it with both.
+- [ ] **(report)** Merge the section edits, do the final read, export the PDF, submit on Canvas.
+- [ ] Own sections I, III and V of the report (see the table above) and the profile / drift / matrix code.
+- [ ] Optional: re-run `make oracle` and `make e2e` on a fresh kind cluster before the demo.
+
+### Ankit (cross-resource rules, CLI, plugin, background and design sections)
+
+- [ ] **(report)** Edit pass on report sections II (Background) and IV (Design): wording, flow, and check that every
+      rule in `internal/check/cross.go` matches Table 3. Do not change numbers.
+- [ ] **(report)** File the three upstream Agones issues at `github.com/agones-dev/agones/issues` and put the links in
+      the README and in report section VII.2. The text for each is in the table below; repro files are in `testdata/`.
 - [ ] Review every finding message in `internal/check/cross.go` for wording; keep the "did you mean" hints.
-- [ ] Write a krew plugin manifest (`plugins/agones-check.yaml`) so the plugin can be installed with `kubectl krew`.
+- [ ] Raise CLI test coverage (`cmd/agones-check` is 65.8%): add tests for `profile --from-cluster` error paths and
+      for `-o github` output with warnings. Check with `go test -cover ./cmd/agones-check`.
+- [ ] Write a krew plugin manifest (`plugins/agones-check.yaml`) so it installs with `kubectl krew`.
+- [ ] Add a "Rules" page to the README that lists AC001..AC201 with one bad and one good example each.
 
-### Emmanuel
-- [ ] After the push, confirm `ci.yml` is green, including the `action` job that dogfoods `action.yml`.
-- [ ] Build the demo repository: one pull request that changes a counter key, and show the action blocking it with
-      annotations on the diff; then apply the same change to kind and show the autoscaler stuck.
-- [ ] Draft the slides (15–20 min): problem, design, live demo, results tables, limitations.
+| Upstream issue | Repro | Rule |
+|---|---|---|
+| `SchedulePolicy.ValidateSchedulePolicy` never validates its nested `policy`, so impossible bounds are accepted | `testdata/e2e/fas-nested-schedule.yaml` | AC004 |
+| A Schedule policy without `between.start` or `between.end` is rejected with `must be of type string: "null"`, although the docs say "If not set, the policy is always eligible" (`Between` uses `metav1.Time` without `omitempty`) | `testdata/e2e/fas-schedule-no-end.yaml` | AC005 |
+| `examples/listfleetautoscaler.yaml` sets `maxCapacity: 100` while `examples/fleet.yaml` leaves the list capacity empty (CRD default 1000), so the autoscaler removes servers | `testdata/agones-examples/` | AC104 |
+
+### Emmanuel (benchmarks, oracle, e2e, CI, evaluation section)
+
+- [ ] **(report)** Edit pass on report sections VI (Evaluation) and VII (Discussion): re-run `make bench perf` and
+      check that every number in the tables still matches `bench/results/`. If a number changes, tell Rohan.
+- [ ] **(report)** After the push, confirm `ci.yml` is green, including the `action` job that runs `action.yml` on
+      this repo's own test data. Fix the workflow if it is not.
+- [ ] Add at least four more mutation scenarios to `testdata/bench/scenarios.yaml` (for example a second game with
+      two Fleets) and a new operator in `internal/mutate` if one is missing; re-run `make bench` and `make oracle`.
+- [ ] Run the oracle against a second Agones version (for example 1.59) on kind and add the result to
+      `bench/results/oracle.md`.
+- [ ] Build the demo repository: one pull request that changes a counter key, with the action blocking it and
+      annotating the diff; then apply the same change to kind and show the autoscaler stuck.
+- [ ] Draft the slides (15-20 min): problem, design, live demo, results tables, limitations.
 
 ### Everyone
-- [ ] Read the whole report once before submission (Nov 9) and the slides before the talk.
+
+- [ ] Read the whole report once before submission and the slides before the talk.
 - [ ] Rehearse the demo end to end on the presenter's laptop.
 
 ## How to continue
