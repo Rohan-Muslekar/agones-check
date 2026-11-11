@@ -96,6 +96,7 @@ agones-check profile --from-cluster --context prod-eu > deploy/profiles/prod-eu.
 Findings appear as annotations on the pull request diff (`-o github`). See `examples/github-workflow/`.
 
 ## Rules
+See the [validation rules guide](docs/rules.md) for invalid and corrected examples for every rule.
 
 | Rule | Severity | What it catches | Agones' webhook |
 |---|---|---|---|
