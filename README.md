@@ -52,7 +52,6 @@ For a local archive smoke test, add `--archive=/path/to/archive.tar.gz` to the i
 
 See [Krew's local installation guide](https://krew.sigs.k8s.io/docs/developer-guide/testing-locally/).
 
-
 ## Usage
 
 ```text
