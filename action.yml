@@ -16,6 +16,9 @@ inputs:
   version:
     description: agones-check version to install (a git ref of this repository).
     default: main
+  install-from-source:
+    description: Build from the source tree containing this action instead of installing a versioned module.
+    default: "false"
 runs:
   using: composite
   steps:
@@ -24,8 +27,14 @@ runs:
         go-version: "1.26"
         cache: false
     - name: Install agones-check
+      if: inputs.install-from-source != 'true'
       shell: bash
       run: go install github.com/Rohan-Muslekar/agones-check/cmd/agones-check@${{ inputs.version }}
+    - name: Install agones-check from source
+      if: inputs.install-from-source == 'true'
+      shell: bash
+      working-directory: ${{ github.action_path }}
+      run: go install ./cmd/agones-check
     - name: Check manifests
       shell: bash
       run: |
