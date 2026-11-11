@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 )
@@ -36,14 +37,77 @@ func TestFindingsExitOne(t *testing.T) {
 	}
 }
 
-func TestWarningFailOn(t *testing.T) {
-	code, _, _ := cli("--fail-on", "warning", "../../testdata/agones-examples/fleetautoscaler.yaml")
-	if code != 1 {
-		t.Errorf("want exit 1 on warning, got %d", code)
+func TestGitHubWarning(t *testing.T) {
+	const path = "../../testdata/agones-examples/fleetautoscaler.yaml"
+	for _, tc := range []struct {
+		failOn string
+		code   int
+	}{
+		{"error", 0},
+		{"warning", 1},
+		{"never", 0},
+	} {
+		t.Run(tc.failOn, func(t *testing.T) {
+			args := []string{"-o", "github"}
+			if tc.failOn != "error" {
+				args = append(args, "--fail-on", tc.failOn)
+			}
+			code, out, stderr := cli(append(args, path)...)
+			if code != tc.code || stderr != "" {
+				t.Fatalf("exit = %d, want %d; stderr = %q", code, tc.code, stderr)
+			}
+			var annotations []string
+			for _, line := range strings.Split(out, "\n") {
+				if strings.HasPrefix(line, "::") {
+					annotations = append(annotations, line)
+				}
+			}
+			if len(annotations) != 1 {
+				t.Fatalf("got %d annotations, want 1: %q", len(annotations), annotations)
+			}
+			// Check key annotation parts without brittle exact match (line number can shift).
+			ann := annotations[0]
+			if !strings.Contains(ann, `::warning file=`+path) ||
+				!strings.Contains(ann, `,line=`) ||
+				!strings.Contains(ann, `AC101 FleetAutoscaler/default/fleet-autoscaler-example`) ||
+				!strings.Contains(ann, `fleetName "fleet-example": no Fleet in namespace "default"`) {
+				t.Errorf("annotation = %q; missing expected parts", ann)
+			}
+		})
 	}
-	code, _, _ = cli("../../testdata/agones-examples/fleetautoscaler.yaml")
-	if code != 0 {
-		t.Errorf("warning alone should pass with default --fail-on, got %d", code)
+}
+
+func TestProfileFromClusterErrors(t *testing.T) {
+	if runtime.GOOS == "windows" {
+		t.Skip("helm fake script not implemented for Windows")
+	}
+	for _, tc := range []struct {
+		name   string
+		helm   string
+		stderr string
+	}{
+		{"missing Helm", "", "helm get values: exec: \"helm\""},
+		{"Helm stderr", "echo 'release not found' >&2; exit 1", "helm get values: release not found\n"},
+		{"Helm exit status", "exit 7", "helm get values: exit status 7\n"},
+		{"invalid values", "echo '{'", "error converting YAML to JSON"},
+		{"invalid discovered version", `case "$1" in
+	get) echo '{}' ;;
+	list) echo '[{"app_version":"99.99.99"}]' ;;
+esac`, `profile "test": unknown Agones version "99.99.99"`},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			dir := t.TempDir()
+			t.Setenv("PATH", dir)
+			if tc.helm != "" {
+				if err := os.WriteFile(filepath.Join(dir, "helm"), []byte("#!/bin/sh\n"+tc.helm+"\n"), 0o755); err != nil {
+					t.Fatal(err)
+				}
+			}
+			code, out, stderr := cli("profile", "--from-cluster", "--name", "test")
+			if code != 2 || out != "" || !strings.HasPrefix(stderr, "agones-check profile: ") || !strings.Contains(stderr, tc.stderr) {
+				t.Fatalf("exit = %d, stdout = %q, stderr = %q; want exit 2, empty stdout and stderr containing %q", code, out, stderr, tc.stderr)
+			}
+		})
 	}
 }
 

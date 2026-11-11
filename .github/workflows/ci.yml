@@ -23,4 +23,4 @@ jobs:
         with:
           paths: testdata/backend
           environments: prod,dev,1.54
-          version: ${{ github.sha }}
+          install-from-source: "true"
