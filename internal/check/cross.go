@@ -86,7 +86,7 @@ func (g *graph) duplicates() []Finding {
 		}
 		if first, ok := seen[o.ID()]; ok {
 			f := objFinding(o, RuleDuplicate, Error,
-				fmt.Sprintf("%s %q is also defined at %s; applying both keeps only the last one", o.Kind, o.Name, first.Source))
+				fmt.Sprintf("%s %q is also defined at %s; keep a single definition to avoid apply-order-dependent configuration", o.Kind, o.Name, first.Source))
 			f.Related = []string{first.ID()}
 			out = append(out, f)
 			continue
@@ -138,11 +138,11 @@ func (g *graph) autoscalers() []Finding {
 				cs, ok := tmpl.Counters[c.Key]
 				if !ok {
 					f := objFinding(o, RuleCounterKey, Error, fmt.Sprintf(
-						"Counter policy key %q is not a counter of Fleet %q (it has: %s); the autoscaler will never scale",
-						c.Key, name, keyList(tmpl.Counters)+suggest(c.Key, keysOf(tmpl.Counters))))
+						"Counter policy key %q is missing from the template for Fleet %q. Available counters: %s%s; the autoscaler will never scale",
+						c.Key, name, keyList(tmpl.Counters), suggest(c.Key, keysOf(tmpl.Counters))))
 					f.Field, f.Related = pr.path+".counter.key", []string{fleet.ID()}
 					out = append(out, f)
-				} else if f, bad := capacityCheck(o, fleet, pr.path+".counter", "counter", c.Key, cs.Capacity, c.MinCapacity, c.MaxCapacity); bad {
+				} else if f, bad := capacityCheck(o, fleet, pr.path+".counter", "counter", c.Key, cs.Capacity, c.MaxCapacity); bad {
 					out = append(out, f)
 				}
 			}
@@ -150,11 +150,11 @@ func (g *graph) autoscalers() []Finding {
 				ls, ok := tmpl.Lists[l.Key]
 				if !ok {
 					f := objFinding(o, RuleListKey, Error, fmt.Sprintf(
-						"List policy key %q is not a list of Fleet %q (it has: %s); the autoscaler will never scale",
-						l.Key, name, keyList(tmpl.Lists)+suggest(l.Key, keysOf(tmpl.Lists))))
+						"List policy key %q is missing from the template for Fleet %q. Available lists: %s%s; the autoscaler will never scale",
+						l.Key, name, keyList(tmpl.Lists), suggest(l.Key, keysOf(tmpl.Lists))))
 					f.Field, f.Related = pr.path+".list.key", []string{fleet.ID()}
 					out = append(out, f)
-				} else if f, bad := capacityCheck(o, fleet, pr.path+".list", "list", l.Key, ls.Capacity, l.MinCapacity, l.MaxCapacity); bad {
+				} else if f, bad := capacityCheck(o, fleet, pr.path+".list", "list", l.Key, ls.Capacity, l.MaxCapacity); bad {
 					out = append(out, f)
 				}
 			}
@@ -169,7 +169,7 @@ func (g *graph) autoscalers() []Finding {
 		objs := byFleet[k]
 		for _, o := range objs[1:] {
 			f := objFinding(o, RuleSharedFleet, Warning, fmt.Sprintf(
-				"Fleet %q is also resized by %s; two autoscalers on one Fleet overwrite each other's replica count",
+				"Fleet %q is also targeted by %s. Multiple autoscalers can overwrite each other's replica counts",
 				o.Autoscaler.Spec.FleetName, objs[0].ID()))
 			f.Related = []string{objs[0].ID()}
 			out = append(out, f)
@@ -178,12 +178,12 @@ func (g *graph) autoscalers() []Finding {
 	return out
 }
 
-func capacityCheck(o, fleet *manifest.Object, path, kind, key string, perServer, minCap, maxCap int64) (Finding, bool) {
+func capacityCheck(o, fleet *manifest.Object, path, kind, key string, perServer, maxCap int64) (Finding, bool) {
 	var msg string
 	switch {
 	case perServer <= 0:
-		msg = fmt.Sprintf("%s %q of Fleet %q has capacity 0, so no number of GameServers can reach minCapacity %d",
-			kind, key, fleet.Name, minCap)
+		msg = fmt.Sprintf("%s %q in Fleet %q has nonpositive per-GameServer capacity (%d). Set a positive capacity for autoscaling",
+			kind, key, fleet.Name, perServer)
 	case maxCap > 0 && maxCap < perServer:
 		msg = fmt.Sprintf("maxCapacity %d is below the per-GameServer capacity %d of %s %q in Fleet %q; even one GameServer exceeds it",
 			maxCap, perServer, kind, key, fleet.Name)
@@ -210,7 +210,7 @@ func (g *graph) missingFleet(o *manifest.Object, name string) Finding {
 		names = append(names, n)
 	}
 	f := objFinding(o, RuleFleetRef, Error, fmt.Sprintf(
-		"fleetName %q does not match any Fleet in namespace %q%s; the autoscaler will fail with FailedGetFleet",
+		"fleetName %q matches no Fleet in the input for namespace %q%s. Include the target Fleet or correct fleetName; the autoscaler will fail with FailedGetFleet",
 		name, o.Namespace, suggest(name, names)))
 	f.Field = "spec.fleetName"
 	return f
@@ -257,21 +257,21 @@ func (g *graph) allocations() []Finding {
 			}
 			if r.required {
 				f := objFinding(o, RuleAllocRequired, Error, fmt.Sprintf(
-					"required selector matches no Fleet or GameServer in namespace %q: %s; every allocation will return UnAllocated",
+					"required selector matches no Fleet template or standalone GameServer in the input for namespace %q: %s; every allocation will return UnAllocated",
 					o.Namespace, why))
 				f.Field = r.path
 				out = append(out, f)
 				continue
 			}
 			reasons = append(reasons, r.path+": "+why)
-			f := objFinding(o, RuleAllocOptional, Warning, fmt.Sprintf("%s matches no Fleet or GameServer: %s", r.path, why))
+			f := objFinding(o, RuleAllocOptional, Warning, fmt.Sprintf("%s matches no Fleet template or standalone GameServer in the input: %s", r.path, why))
 			f.Field = r.path
 			optional = append(optional, f)
 		}
 		if len(gsa.Spec.Selectors) > 0 && !anyMatch {
 			f := objFinding(o, RuleAllocRequired, Error, fmt.Sprintf(
-				"none of the %d selectors matches a Fleet or GameServer in namespace %q (%s); every allocation will return UnAllocated",
-				len(refs), o.Namespace, strings.Join(reasons, "; ")))
+				"no ordered selector matches a Fleet template or standalone GameServer in the input for namespace %q (%s); every allocation will return UnAllocated",
+				o.Namespace, strings.Join(reasons, "; ")))
 			f.Field = "spec.selectors"
 			out = append(out, f)
 		} else {
@@ -338,7 +338,7 @@ func labelHint(sel *allocationv1.GameServerSelector, tmpls []template) string {
 			return fmt.Sprintf(" (%s=%q: did you mean %s?)", k, want, strings.TrimSuffix(strings.TrimPrefix(h, " (did you mean "), "?)"))
 		}
 		if !contains(vals, want) {
-			return fmt.Sprintf(" (templates use %s in %s)", k, strings.Join(uniq(vals), ", "))
+			return fmt.Sprintf(" (available values for label %s: %s)", k, strings.Join(uniq(vals), ", "))
 		}
 	}
 	return ""
@@ -410,7 +410,7 @@ func allocationKeys(o *manifest.Object, matched []template) []Finding {
 	var out []Finding
 	add := func(path, what, key string) {
 		f := objFinding(o, RuleAllocKeys, Warning, fmt.Sprintf(
-			"%s %q is not defined by any Fleet this allocation can match", what, key))
+			"%s %q references a key absent from every matching Fleet template and standalone GameServer in the input", what, key))
 		f.Field = path
 		out = append(out, f)
 	}
@@ -428,12 +428,12 @@ func allocationKeys(o *manifest.Object, matched []template) []Finding {
 	}
 	for _, k := range sortedKeys(gsa.Spec.Counters) {
 		if !hasCounter(k) {
-			add("spec.counters."+k, "counter action on", k)
+			add("spec.counters."+k, "counter action for", k)
 		}
 	}
 	for _, k := range sortedKeys(gsa.Spec.Lists) {
 		if !hasList(k) {
-			add("spec.lists."+k, "list action on", k)
+			add("spec.lists."+k, "list action for", k)
 		}
 	}
 	return out
@@ -457,7 +457,7 @@ func (g *graph) fleetPriorities() []Finding {
 			}
 			if !ok {
 				f := objFinding(o, RuleFleetPriority, Warning, fmt.Sprintf(
-					"priority %s %q is not defined in the Fleet template; scale-down ordering ignores it", strings.ToLower(p.Type), p.Key))
+					"priority %s %q is missing from the Fleet template. Define the key or update the priority to use an existing key", strings.ToLower(p.Type), p.Key))
 				f.Field = fmt.Sprintf("spec.priorities[%d]", i)
 				out = append(out, f)
 			}

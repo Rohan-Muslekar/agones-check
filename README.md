@@ -17,9 +17,9 @@ once per target environment, and adds the cross-resource and cross-environment c
 ```text
 $ agones-check -e prod,dev deploy/
 deploy/autoscaler.yaml:1 spec.policy.counter.key: ERROR AC102 [FleetAutoscaler/e2e/typo-counter] (env: all)
-    Counter policy key "room" is not a counter of Fleet "arena" (it has: rooms (did you mean "rooms"?)); the autoscaler will never scale
+    Counter policy key "room" is missing from the template for Fleet "arena". Available counters: rooms (did you mean "rooms"?); the autoscaler will never scale
 deploy/allocation.yaml:1 spec.selectors: ERROR AC110 [GameServerAllocation/e2e/typo-] (env: all)
-    none of the 1 selectors matches a Fleet or GameServer in namespace "e2e" (spec.selectors[0]: no template has labels
+    no ordered selector matches a Fleet template or standalone GameServer in the input for namespace "e2e" (spec.selectors[0]: no template has labels
     matching "mode=rankd" (mode="rankd": did you mean "ranked"?)); every allocation will return UnAllocated
 deploy/wasm.yaml:24: WARNING AC201 [FleetAutoscaler/default/wasm-autoscaler] (env: prod)
     accepted in dev but rejected in prod; a change that passes in one environment will fail on rollout to the other
