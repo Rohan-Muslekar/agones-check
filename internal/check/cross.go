@@ -138,7 +138,7 @@ func (g *graph) autoscalers() []Finding {
 				cs, ok := tmpl.Counters[c.Key]
 				if !ok {
 					f := objFinding(o, RuleCounterKey, Error, fmt.Sprintf(
-						"Counter policy key %q is missing from the template for Fleet %q. Available counters: %s%s",
+						"Counter policy key %q is missing from the template for Fleet %q. Available counters: %s%s; the autoscaler will never scale",
 						c.Key, name, keyList(tmpl.Counters), suggest(c.Key, keysOf(tmpl.Counters))))
 					f.Field, f.Related = pr.path+".counter.key", []string{fleet.ID()}
 					out = append(out, f)
@@ -150,7 +150,7 @@ func (g *graph) autoscalers() []Finding {
 				ls, ok := tmpl.Lists[l.Key]
 				if !ok {
 					f := objFinding(o, RuleListKey, Error, fmt.Sprintf(
-						"List policy key %q is missing from the template for Fleet %q. Available lists: %s%s",
+						"List policy key %q is missing from the template for Fleet %q. Available lists: %s%s; the autoscaler will never scale",
 						l.Key, name, keyList(tmpl.Lists), suggest(l.Key, keysOf(tmpl.Lists))))
 					f.Field, f.Related = pr.path+".list.key", []string{fleet.ID()}
 					out = append(out, f)
@@ -210,7 +210,7 @@ func (g *graph) missingFleet(o *manifest.Object, name string) Finding {
 		names = append(names, n)
 	}
 	f := objFinding(o, RuleFleetRef, Error, fmt.Sprintf(
-		"fleetName %q matches no Fleet in the input for namespace %q%s. Include the target Fleet or correct fleetName",
+		"fleetName %q matches no Fleet in the input for namespace %q%s. Include the target Fleet or correct fleetName; the autoscaler will fail with FailedGetFleet",
 		name, o.Namespace, suggest(name, names)))
 	f.Field = "spec.fleetName"
 	return f
@@ -257,7 +257,7 @@ func (g *graph) allocations() []Finding {
 			}
 			if r.required {
 				f := objFinding(o, RuleAllocRequired, Error, fmt.Sprintf(
-					"required selector matches no Fleet template or standalone GameServer in the input for namespace %q: %s",
+					"required selector matches no Fleet template or standalone GameServer in the input for namespace %q: %s; every allocation will return UnAllocated",
 					o.Namespace, why))
 				f.Field = r.path
 				out = append(out, f)
@@ -270,7 +270,7 @@ func (g *graph) allocations() []Finding {
 		}
 		if len(gsa.Spec.Selectors) > 0 && !anyMatch {
 			f := objFinding(o, RuleAllocRequired, Error, fmt.Sprintf(
-				"no ordered selector matches a Fleet template or standalone GameServer in the input for namespace %q (%s)",
+				"no ordered selector matches a Fleet template or standalone GameServer in the input for namespace %q (%s); every allocation will return UnAllocated",
 				o.Namespace, strings.Join(reasons, "; ")))
 			f.Field = "spec.selectors"
 			out = append(out, f)
