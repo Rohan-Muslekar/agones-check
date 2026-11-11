@@ -35,6 +35,23 @@ make plugin
 
 Requires Go 1.26. The binary links Agones 1.61's API package; nothing runs in the cluster.
 
+### Krew installation
+
+The [Krew manifest template](plugins/agones-check.yaml) requires published, verified release archives. Use the Go installation above until those artifacts are available.
+
+For each supported OS and architecture, build `./cmd/agones-check` and put the executable and `LICENSE` at the root of a `.tar.gz` or `.zip` archive. Use `agones-check` for the executable on Unix and `agones-check.exe` on Windows. After publishing the archives, download them and record each archive's URL and SHA-256 in the template, along with the release tag and matching OS and architecture.
+
+With Krew installed and the manifest populated, verify installation from the published archive:
+
+```sh
+kubectl krew install --manifest=plugins/agones-check.yaml
+kubectl agones-check version
+```
+
+For a local archive smoke test, add `--archive=/path/to/archive.tar.gz` to the install command. Krew exposes the command as `kubectl agones-check`.
+
+See [Krew's local installation guide](https://krew.sigs.k8s.io/docs/developer-guide/testing-locally/).
+
 ## Usage
 
 ```text
