@@ -1,0 +1,24 @@
+# Template. Fill in the release tag and add one entry per tested release archive.
+apiVersion: krew.googlecontainertools.github.com/v1alpha2
+kind: Plugin
+metadata:
+  name: agones-check
+spec:
+  version: null
+  homepage: https://github.com/Rohan-Muslekar/agones-check
+  shortDescription: Check Agones manifests before deployment
+  description: |
+    Checks Agones manifests for validation errors, broken cross-resource
+    references, and differences across target environment profiles.
+  caveats: |
+    Cluster profiles require Helm. The CLI uses kubectl to discover the current context name.
+  platforms: []
+  # Each verified release archive needs an entry of this form:
+  # - selector:
+  #     matchLabels:
+  #       os: <archive GOOS>
+  #       arch: <archive GOARCH>
+  #   uri: <published archive URL>
+  #   sha256: <SHA-256 of the downloaded archive>
+  #   bin: agones-check
+  # Use agones-check.exe for an archive built for Windows.
