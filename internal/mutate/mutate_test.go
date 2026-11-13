@@ -57,6 +57,32 @@ func TestOperatorsProduceValidYAML(t *testing.T) {
 	}
 }
 
+func TestNewOperatorsApply(t *testing.T) {
+	for _, tc := range []struct {
+		dir  string
+		fn   func(Set) []Mutant
+		want int
+		has  string
+		lost string
+	}{
+		{"../../testdata/backend/casual", scheduleUnsetEnd, 1, "start:", "end:"},
+		{"../../testdata/backend/arena", secondAutoscaler, 2, "name: arena-duo-matches-new", ""},
+		{"../../testdata/backend/ranked", fleetPriorityKeyTypo, 1, "key: roooms", ""},
+	} {
+		mus := tc.fn(loadDir(t, tc.dir))
+		if len(mus) != tc.want {
+			t.Fatalf("%s: want %d mutants, got %d", tc.dir, tc.want, len(mus))
+		}
+		out := string(mus[0].Set.Render())
+		if !strings.Contains(out, tc.has) {
+			t.Errorf("%s (%s): missing %q", tc.dir, mus[0].Where, tc.has)
+		}
+		if tc.lost != "" && strings.Contains(out, tc.lost) {
+			t.Errorf("%s (%s): still contains %q", tc.dir, mus[0].Where, tc.lost)
+		}
+	}
+}
+
 func TestTypo(t *testing.T) {
 	if typo("rooms") != "roooms" || typo("a") != "ax" {
 		t.Errorf("typo: %q %q", typo("rooms"), typo("a"))

@@ -1,0 +1,94 @@
+# QA lab: a Fleet of bot servers plus one standalone debug GameServer.
+# Allocations prefer a bot server and fall back to the debug host.
+apiVersion: agones.dev/v1
+kind: Fleet
+metadata:
+  name: bots
+  namespace: lab
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        game: lab
+        role: bot
+    spec:
+      ports:
+        - name: default
+          containerPort: 7200
+      counters:
+        slots:
+          count: 0
+          capacity: 3
+      template:
+        spec:
+          containers:
+            - name: bot
+              image: registry.example.com/lab/bot-server:2.1.0
+              resources:
+                requests:
+                  memory: 128Mi
+                  cpu: 100m
+---
+apiVersion: agones.dev/v1
+kind: GameServer
+metadata:
+  name: debug-host
+  namespace: lab
+  labels:
+    game: lab
+    role: debug
+spec:
+  ports:
+    - name: default
+      containerPort: 7200
+  counters:
+    slots:
+      count: 0
+      capacity: 1
+  template:
+    spec:
+      containers:
+        - name: bot
+          image: registry.example.com/lab/bot-server:2.1.0-debug
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 100m
+---
+apiVersion: autoscaling.agones.dev/v1
+kind: FleetAutoscaler
+metadata:
+  name: bots-buffer
+  namespace: lab
+spec:
+  fleetName: bots
+  policy:
+    type: Buffer
+    buffer:
+      bufferSize: 1
+      minReplicas: 1
+      maxReplicas: 10
+---
+apiVersion: allocation.agones.dev/v1
+kind: GameServerAllocation
+metadata:
+  generateName: lab-
+  namespace: lab
+spec:
+  selectors:
+    - matchLabels:
+        game: lab
+        role: bot
+      gameServerState: Ready
+      counters:
+        slots:
+          minAvailable: 1
+    - matchLabels:
+        game: lab
+        role: debug
+      gameServerState: Ready
+  counters:
+    slots:
+      action: Increment
+      amount: 1
