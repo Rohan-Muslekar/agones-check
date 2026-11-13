@@ -1,0 +1,28 @@
+apiVersion: autoscaling.agones.dev/v1
+kind: FleetAutoscaler
+metadata:
+  name: arena-duo-matches
+  namespace: arena
+spec:
+  fleetName: arena-duo
+  policy:
+    type: Counter
+    counter:
+      key: matches
+      bufferSize: 4
+      minCapacity: 4
+      maxCapacity: 200
+---
+apiVersion: autoscaling.agones.dev/v1
+kind: FleetAutoscaler
+metadata:
+  name: arena-squad-buffer
+  namespace: arena
+spec:
+  fleetName: arena-squad
+  policy:
+    type: Buffer
+    buffer:
+      bufferSize: 2
+      minReplicas: 2
+      maxReplicas: 40

@@ -1,0 +1,70 @@
+# Arena shooter: a second game with two Fleets in one namespace.
+# Duo servers host two matches at once; squad servers host one match of 4.
+apiVersion: agones.dev/v1
+kind: Fleet
+metadata:
+  name: arena-duo
+  namespace: arena
+spec:
+  replicas: 3
+  scheduling: Packed
+  priorities:
+    - type: Counter
+      key: matches
+      order: Ascending
+  template:
+    metadata:
+      labels:
+        game: arena
+        size: duo
+    spec:
+      ports:
+        - name: default
+          containerPort: 7777
+      counters:
+        matches:
+          count: 0
+          capacity: 2
+      template:
+        spec:
+          containers:
+            - name: arena
+              image: registry.example.com/arena/server:1.3.0
+              resources:
+                requests:
+                  memory: 512Mi
+                  cpu: 500m
+---
+apiVersion: agones.dev/v1
+kind: Fleet
+metadata:
+  name: arena-squad
+  namespace: arena
+spec:
+  replicas: 2
+  scheduling: Packed
+  template:
+    metadata:
+      labels:
+        game: arena
+        size: squad
+    spec:
+      ports:
+        - name: default
+          containerPort: 7777
+      counters:
+        matches:
+          count: 0
+          capacity: 1
+      lists:
+        players:
+          capacity: 4
+      template:
+        spec:
+          containers:
+            - name: arena
+              image: registry.example.com/arena/server:1.3.0
+              resources:
+                requests:
+                  memory: 1Gi
+                  cpu: "1"

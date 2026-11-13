@@ -1,0 +1,81 @@
+# Party game: lobbies are tracked with a List of player IDs, and the Fleet
+# scales on free player slots.
+apiVersion: agones.dev/v1
+kind: Fleet
+metadata:
+  name: party
+  namespace: party
+spec:
+  replicas: 2
+  scheduling: Packed
+  priorities:
+    - type: List
+      key: players
+      order: Ascending
+  template:
+    metadata:
+      labels:
+        game: party
+        region: ca-central
+    spec:
+      ports:
+        - name: default
+          containerPort: 7000
+      lists:
+        players:
+          capacity: 6
+      template:
+        spec:
+          containers:
+            - name: party
+              image: registry.example.com/party/server:0.9.2
+              resources:
+                requests:
+                  memory: 256Mi
+                  cpu: 250m
+---
+apiVersion: autoscaling.agones.dev/v1
+kind: FleetAutoscaler
+metadata:
+  name: party-players
+  namespace: party
+spec:
+  fleetName: party
+  policy:
+    type: List
+    list:
+      key: players
+      bufferSize: 6
+      minCapacity: 12
+      maxCapacity: 600
+---
+apiVersion: allocation.agones.dev/v1
+kind: GameServerAllocation
+metadata:
+  generateName: party-
+  namespace: party
+spec:
+  scheduling: Packed
+  selectors:
+    - matchLabels:
+        game: party
+        region: ca-central
+      gameServerState: Allocated
+      lists:
+        players:
+          minAvailable: 1
+    - matchLabels:
+        game: party
+        region: ca-central
+      gameServerState: Ready
+      lists:
+        players:
+          minAvailable: 1
+  priorities:
+    - type: List
+      key: players
+      order: Ascending
+  lists:
+    players:
+      addValues:
+        - player-x
