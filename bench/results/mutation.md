@@ -1,6 +1,6 @@
 # Mutation benchmark
 
-Generated 2026-11-12 23:53 EST by `go run ./cmd/bench`. 18 scenarios, 261 mutants.
+Generated 2026-11-16 00:51 IST by `go run ./cmd/bench`. 18 scenarios, 261 mutants.
 
 ## RQ2: unmodified scenarios (prod)
 

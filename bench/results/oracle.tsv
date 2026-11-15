@@ -188,7 +188,7 @@ example-counter/fleet-priority-key-typo-1	accepted
 example-counter/invalid-bounds-1	rejected	The FleetAutoscaler "fleet-autoscaler-counter" is invalid: spec.policy.counter.minCapacity: Invalid value: 10: minCapacity should be smaller than maxCapacity
 example-counter/unknown-field-1	rejected	Error from server (BadRequest): error when creating "STDIN": Fleet in version "v1" cannot be handled as a Fleet: strict decoding error: unknown field "spec.replica"
 example-counter/unknown-field-2	rejected	Error from server (BadRequest): error when creating "STDIN": FleetAutoscaler in version "v1" cannot be handled as a FleetAutoscaler: strict decoding error: unknown field "spec.policy.counter.buffersize"
-example-cpp/alpha-gated-field-1	rejected	The Fleet "cpp-simple-9t76x" is invalid: spec.template.spec.players: Forbidden: Value cannot be set unless feature flag PlayerTracking is enabled
+example-cpp/alpha-gated-field-1	rejected	The Fleet "cpp-simple-2mdg7" is invalid: spec.template.spec.players: Forbidden: Value cannot be set unless feature flag PlayerTracking is enabled
 example-cpp/benign-add-label-1	accepted	
 example-cpp/benign-image-tag-1	accepted	
 example-cpp/benign-replicas-1	accepted	
