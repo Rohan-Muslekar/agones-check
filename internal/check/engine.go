@@ -70,6 +70,10 @@ func Run(set *manifest.Set, profiles []*profile.Profile, opts Options) (*Result,
 		if o.DecodeErr != nil {
 			findings = append(findings, objFinding(o, RuleSchema, Error,
 				"manifest does not match the "+o.Kind+" schema: "+cleanDecodeErr(o.DecodeErr)))
+		} else if o.IgnoredFields != nil {
+			findings = append(findings, objFinding(o, RuleSchema, Warning,
+				"the "+o.Kind+" API ignores fields it does not know, so the cluster accepts this object and silently drops: "+
+					cleanDecodeErr(o.IgnoredFields)+"; the setting has no effect"))
 		}
 	}
 
@@ -154,7 +158,7 @@ func Run(set *manifest.Set, profiles []*profile.Profile, opts Options) (*Result,
 					continue
 				}
 				switch {
-				case f.Rule == RuleSchema || f.Rule == RuleUpstream || f.Rule == RuleScheduleNull:
+				case (f.Rule == RuleSchema && f.Severity == Error) || f.Rule == RuleUpstream || f.Rule == RuleScheduleNull:
 					row[i] = StatusRejected
 				case f.Severity == Error && row[i] != StatusRejected:
 					row[i] = StatusBroken

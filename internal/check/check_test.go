@@ -137,6 +137,8 @@ func TestRules(t *testing.T) {
 		{"fleet priority unknown key", strings.Replace(fleet, "  replicas: 2\n", "  replicas: 2\n  priorities: [{type: Counter, key: seats, order: Ascending}]\n", 1),
 			RuleFleetPriority, Warning, `"seats"`},
 		{"unknown field", strings.Replace(fleet, "replicas: 2", "replica: 2", 1), RuleSchema, Error, `unknown field "spec.replica"`},
+		{"unknown allocation field is dropped", fleet + alloc("  selectors:\n    - matchLabels: {mode: ranked}\n      players: {minAvailable: 0, maxAvailable: 1}\n"),
+			RuleSchema, Warning, `silently drops: unknown field "spec.selectors[0].players"`},
 		{"upstream validation", fleet + fas("    type: Buffer\n    buffer: {bufferSize: 5, minReplicas: 1, maxReplicas: 10}\n"),
 			RuleUpstream, Error, "minReplicas"},
 		{"nested schedule policy", fleet + fas("    type: Schedule\n    schedule:\n      between: {start: \"2026-01-01T00:00:00Z\", end: \"2100-01-01T00:00:00Z\"}\n      activePeriod: {startCron: \"0 18 * * *\", duration: 2h}\n      policy:\n        type: Buffer\n        buffer: {bufferSize: 2, minReplicas: 5, maxReplicas: 1}\n"),
@@ -245,5 +247,30 @@ func BenchmarkRun200x3(b *testing.B) {
 		if _, err := Run(set, ps, Options{}); err != nil {
 			b.Fatal(err)
 		}
+	}
+}
+
+func TestDuplicateAutoscalerIsNotASecondAutoscaler(t *testing.T) {
+	a := fas("    type: Buffer\n    buffer: {bufferSize: 1, maxReplicas: 5}\n")
+	r := run(t, fleet+a+a)
+	if has(r, RuleDuplicate, Error) == nil {
+		t.Fatalf("want duplicate error, got %v", r.Findings)
+	}
+	if f := has(r, RuleSharedFleet, Warning); f != nil {
+		t.Errorf("one autoscaler defined twice reported as two: %v", f)
+	}
+}
+
+func TestIgnoredAllocationFieldIsNotRejected(t *testing.T) {
+	r := run(t, fleet+alloc("  selectors:\n    - matchLabels: {mode: ranked}\n      players: {minAvailable: 0}\n"))
+	for id, row := range r.Matrix {
+		for _, s := range row {
+			if s == StatusRejected {
+				t.Errorf("%s marked rejected; the allocation API accepts unknown fields", id)
+			}
+		}
+	}
+	if has(r, RuleAllocRequired, Error) != nil {
+		t.Errorf("allocation should still match the Fleet: %v", r.Findings)
 	}
 }

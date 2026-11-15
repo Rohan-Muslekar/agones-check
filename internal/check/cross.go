@@ -166,7 +166,16 @@ func (g *graph) autoscalers() []Finding {
 	}
 	sort.Strings(keys)
 	for _, k := range keys {
-		objs := byFleet[k]
+		// A FleetAutoscaler defined twice under one name is one object on
+		// the cluster (AC003 reports the duplicate), not two autoscalers.
+		var objs []*manifest.Object
+		seen := map[string]bool{}
+		for _, o := range byFleet[k] {
+			if !seen[o.ID()] {
+				seen[o.ID()] = true
+				objs = append(objs, o)
+			}
+		}
 		for _, o := range objs[1:] {
 			f := objFinding(o, RuleSharedFleet, Warning, fmt.Sprintf(
 				"Fleet %q is also targeted by %s. Multiple autoscalers can overwrite each other's replica counts",

@@ -61,6 +61,12 @@ type Object struct {
 	// server rejects such objects under kubectl's default strict field
 	// validation.
 	DecodeErr error
+
+	// IgnoredFields is set for a GameServerAllocation whose only decode
+	// problem is unknown fields. Allocations go to Agones' aggregated API,
+	// which does not apply strict field validation: the cluster accepts
+	// the object and silently drops those fields.
+	IgnoredFields error
 }
 
 // ID is kind/namespace/name, unique per object in a cluster.
@@ -248,7 +254,8 @@ func decode(chunk []byte) (*Object, error) {
 		o.DecodeErr = strictUnmarshal(js, o.Autoscaler)
 	case group == "allocation.agones.dev" && h.Kind == KindAllocation:
 		o.Allocation = &allocationv1.GameServerAllocation{}
-		o.DecodeErr = strictUnmarshal(js, o.Allocation)
+		fatal, unknown := strictUnmarshalSplit(js, o.Allocation)
+		o.DecodeErr, o.IgnoredFields = fatal, unknown
 	default:
 		return nil, nil
 	}
@@ -310,6 +317,31 @@ func applyCRDDefaults(o *Object) {
 // strictUnmarshal decodes the way the API server does under kubectl's
 // default strict field validation: field names are case-sensitive, and
 // unknown or duplicate fields are errors.
+// strictUnmarshalSplit separates errors that stop decoding (wrong types)
+// from strict-mode errors (unknown or duplicate fields) that leave the
+// object fully decoded.
+func strictUnmarshalSplit(js []byte, into any) (fatal, unknown error) {
+	strict, err := kjson.UnmarshalStrict(js, into, kjson.DisallowDuplicateFields, kjson.DisallowUnknownFields)
+	if err != nil {
+		return err, nil
+	}
+	var dup, unk []string
+	for _, e := range strict {
+		if strings.Contains(e.Error(), "unknown field") {
+			unk = append(unk, e.Error())
+		} else {
+			dup = append(dup, e.Error())
+		}
+	}
+	if len(dup) > 0 {
+		fatal = errors.New(strings.Join(dup, "; "))
+	}
+	if len(unk) > 0 {
+		unknown = errors.New(strings.Join(unk, "; "))
+	}
+	return fatal, unknown
+}
+
 func strictUnmarshal(js []byte, into any) error {
 	strict, err := kjson.UnmarshalStrict(js, into, kjson.DisallowDuplicateFields, kjson.DisallowUnknownFields)
 	if err != nil {

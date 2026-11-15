@@ -55,7 +55,7 @@ const (
 
 // RuleInfo describes a rule for docs and SARIF-style output.
 var RuleInfo = map[string]string{
-	RuleSchema:        "Manifest has an unknown or mistyped field (kubectl strict field validation rejects it)",
+	RuleSchema:        "Manifest has an unknown or mistyped field (rejected by strict field validation; ignored by the allocation API)",
 	RuleUpstream:      "Agones admission validation rejects the object in this environment",
 	RuleDuplicate:     "Duplicate object: a later document silently replaces an earlier one",
 	RuleNestedPolicy:  "Policy nested inside a Schedule policy is invalid (Agones' webhook does not validate it)",
