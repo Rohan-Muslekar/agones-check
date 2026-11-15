@@ -371,8 +371,11 @@ func summarize(rs []mutantResult, clean []string, nScen int) string {
 
 // compareOracle reads "mutant-id<TAB>accepted|rejected<TAB>message" lines
 // produced by go run ./cmd/oracle and checks that the offline dry-run
-// baseline for env (prod or dev) agrees with a real API server running the
-// same feature gates.
+// baseline for env agrees with a real API server. env is prod or dev
+// (the cluster runs Agones 1.61.0 with those gates), or an older Agones
+// version such as 1.54, in which case the cluster runs that release and
+// the offline verdict is recomputed from the mutant files with that
+// version's default gates.
 func compareOracle(tsv, env, out string) error {
 	var gates, file string
 	switch env {
@@ -381,7 +384,11 @@ func compareOracle(tsv, env, out string) error {
 	case "dev":
 		gates, file = "every alpha gate on (dev: PlayerAllocationFilter, PlayerTracking, WasmAutoscaler)", "oracle-dev.md"
 	default:
-		return fmt.Errorf("-oracle-env must be prod or dev, got %q", env)
+		p, err := profile.Builtin(env)
+		if err != nil {
+			return fmt.Errorf("-oracle-env: %w", err)
+		}
+		return compareOracleVersion(tsv, p, out)
 	}
 	baseline := "dry-run-" + env
 	js, err := os.ReadFile(filepath.Join(out, "mutants.json"))
@@ -435,4 +442,55 @@ func compareOracle(tsv, env, out string) error {
 	}
 	fmt.Print(b.String())
 	return os.WriteFile(filepath.Join(out, file), []byte(b.String()), 0o644)
+}
+
+// compareOracleVersion compares a cluster running an older Agones release
+// with the offline webhook emulation under that release's default gates.
+// The emulation always runs Agones 1.61's validation code, so a
+// disagreement here is a rule whose code changed between the releases.
+func compareOracleVersion(tsv string, p *profile.Profile, out string) error {
+	f, err := os.Open(tsv)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+	mutDir := filepath.Join(filepath.Dir(out), "mutants")
+	var agree, total int
+	var dis []string
+	sc := bufio.NewScanner(f)
+	sc.Buffer(make([]byte, 1<<20), 1<<20)
+	for sc.Scan() {
+		parts := strings.SplitN(sc.Text(), "\t", 3)
+		if len(parts) < 2 || parts[1] == "error" {
+			continue
+		}
+		set, err := manifest.Load(filepath.Join(mutDir, parts[0]+".yaml"))
+		if err != nil {
+			return err
+		}
+		res, err := check.Run(set, []*profile.Profile{p}, check.Options{SkipCross: true})
+		if err != nil {
+			return err
+		}
+		offline := res.Count(check.Error) > 0
+		total++
+		if offline == (parts[1] == "rejected") {
+			agree++
+			continue
+		}
+		msg := ""
+		if len(parts) > 2 {
+			msg = parts[2]
+		}
+		dis = append(dis, fmt.Sprintf("- %s: cluster %s, offline rejected=%v. %s", parts[0], parts[1], offline, msg))
+	}
+	var b strings.Builder
+	fmt.Fprintf(&b, "# Cluster oracle vs offline webhook baseline, Agones %s\n\nGenerated %s. `kubectl apply --dry-run=server` on a kind cluster running Agones %s with its default gates, compared with agones-check's offline emulation using profile %q (Agones %s validation code, %s default gates).\n\n",
+		p.AgonesVersion, time.Now().Format("2006-01-02 15:04 MST"), p.AgonesVersion, p.Name, profile.CheckerVersion, p.AgonesVersion)
+	fmt.Fprintf(&b, "Agreement: %d / %d mutants (%.1f%%).\n\n", agree, total, 100*float64(agree)/float64(max(total, 1)))
+	if len(dis) > 0 {
+		b.WriteString("Disagreements:\n\n" + strings.Join(dis, "\n") + "\n")
+	}
+	fmt.Print(b.String())
+	return os.WriteFile(filepath.Join(out, "oracle-"+p.Name+".md"), []byte(b.String()), 0o644)
 }
