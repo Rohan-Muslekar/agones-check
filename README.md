@@ -161,11 +161,14 @@ Agones keeps feature gates in a package-level variable, so environments are chec
 | `make perf` | check time vs. number of objects and environments | `bench/results/perf.md` |
 | `make oracle` | sends every mutant to a real cluster with `--dry-run=server`, compares with the offline baseline | `bench/results/oracle.md` |
 | `make oracle-dev` | same, on a cluster with every alpha gate on, compared with the dev baseline | `bench/results/oracle-dev.md` |
+| `scripts/realworld.sh` | runs the tool on 438 public Agones manifests from 152 GitHub repositories (pinned commits); triage in `realworld.md` | `bench/results/realworld-findings.tsv` |
 | `make e2e` | applies seeded mistakes to a kind cluster and records what Agones actually does | `bench/results/e2e.md` |
 
 Current results: agones-check finds 174 of 174 faulty mutants with no false alarm on 87 benign ones; `kubectl
 --dry-run=server` finds 70 (prod gates) or 51 (dev gates). Both offline baselines agree with a real Agones 1.61.0
 cluster on 261 of 261 mutants (prod gates, and every alpha gate on). On the cluster, all 8 runtime cases behave as the tool predicts.
+On 389 objects from 126 public repositories it finds confirmed mistakes in 17, 11 of which pass `kubectl --dry-run=server`
+(`bench/results/realworld.md`).
 
 `testdata/agones-examples/` holds the 54 example YAML files of Agones 1.61 (Apache-2.0, unchanged).
 `testdata/backend/` holds seven hand-written sets modelled on game backends.
