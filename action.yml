@@ -14,8 +14,8 @@ inputs:
     description: Fail the job on findings of this severity or worse (error, warning, never).
     default: error
   version:
-    description: agones-check version to install (a git ref of this repository).
-    default: main
+    description: agones-check version to install (a release tag of this repository; keep it in step with the tag in `uses:`).
+    default: v0.1.0
   install-from-source:
     description: Build from the source tree containing this action instead of installing a versioned module.
     default: "false"

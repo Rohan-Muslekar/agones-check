@@ -104,7 +104,7 @@ agones-check profile --from-cluster --context prod-eu > deploy/profiles/prod-eu.
 ### In CI
 
 ```yaml
-- uses: Rohan-Muslekar/agones-check@main
+- uses: Rohan-Muslekar/agones-check@v0.1.0
   with:
     paths: deploy/agones
     environments: deploy/profiles/prod.yaml,deploy/profiles/staging.yaml,dev
