@@ -1,0 +1,87 @@
+# Live events: a Chain autoscaler raises the session buffer during launch
+# week and falls back to a smaller Counter policy afterwards.
+apiVersion: agones.dev/v1
+kind: Fleet
+metadata:
+  name: event-hosts
+  namespace: events
+spec:
+  replicas: 3
+  scheduling: Packed
+  template:
+    metadata:
+      labels:
+        game: events
+        tier: live
+    spec:
+      ports:
+        - name: default
+          containerPort: 7100
+      counters:
+        sessions:
+          count: 0
+          capacity: 10
+      template:
+        spec:
+          containers:
+            - name: events
+              image: registry.example.com/events/server:5.0.1
+              resources:
+                requests:
+                  memory: 512Mi
+                  cpu: 500m
+---
+apiVersion: autoscaling.agones.dev/v1
+kind: FleetAutoscaler
+metadata:
+  name: event-sessions
+  namespace: events
+spec:
+  fleetName: event-hosts
+  policy:
+    type: Chain
+    chain:
+      - id: launch-week
+        type: Schedule
+        schedule:
+          between:
+            start: "2026-11-20T00:00:00Z"
+            end: "2026-11-27T00:00:00Z"
+          activePeriod:
+            timezone: "America/Toronto"
+            startCron: "0 17 * * *"
+            duration: "6h"
+          policy:
+            type: Counter
+            counter:
+              key: sessions
+              bufferSize: 40
+              minCapacity: 40
+              maxCapacity: 1000
+      - id: default
+        type: Counter
+        counter:
+          key: sessions
+          bufferSize: 10
+          minCapacity: 20
+          maxCapacity: 300
+---
+apiVersion: allocation.agones.dev/v1
+kind: GameServerAllocation
+metadata:
+  generateName: event-
+  namespace: events
+spec:
+  scheduling: Packed
+  selectors:
+    - matchLabels:
+        game: events
+        tier: live
+      gameServerState: Ready
+      counters:
+        sessions:
+          minAvailable: 1
+  counters:
+    sessions:
+      action: Increment
+      amount: 1

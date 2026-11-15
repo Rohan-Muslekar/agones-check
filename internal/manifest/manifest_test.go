@@ -121,7 +121,7 @@ func TestLoadDirectory(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if set.Files != 7 || len(set.Objects) != 11 {
-		t.Fatalf("files=%d objects=%d, want 7 and 11", set.Files, len(set.Objects))
+	if set.Files != 13 || len(set.Objects) != 26 {
+		t.Fatalf("files=%d objects=%d, want 13 and 26", set.Files, len(set.Objects))
 	}
 }

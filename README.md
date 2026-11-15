@@ -157,17 +157,17 @@ Agones keeps feature gates in a package-level variable, so environments are chec
 | Command | What it measures | Output |
 |---|---|---|
 | `make test` / `make cover` | unit tests | |
-| `make bench` | mutation benchmark: 157 mutants of 14 scenarios, against `kubectl --dry-run=server` | `bench/results/mutation.md` |
+| `make bench` | mutation benchmark: 261 mutants of 18 scenarios, against `kubectl --dry-run=server` | `bench/results/mutation.md` |
 | `make perf` | check time vs. number of objects and environments | `bench/results/perf.md` |
 | `make oracle` | sends every mutant to a real cluster with `--dry-run=server`, compares with the offline baseline | `bench/results/oracle.md` |
 | `make e2e` | applies seeded mistakes to a kind cluster and records what Agones actually does | `bench/results/e2e.md` |
 
-Current results: agones-check finds 95 of 95 faulty mutants with no false alarm on 62 benign ones; `kubectl
---dry-run=server` finds 47 (prod gates) or 33 (dev gates). The offline baseline agrees with a real Agones 1.61.0
-cluster on 157 of 157 mutants. On the cluster, all 8 runtime cases behave as the tool predicts.
+Current results: agones-check finds 174 of 174 faulty mutants with no false alarm on 87 benign ones; `kubectl
+--dry-run=server` finds 70 (prod gates) or 51 (dev gates). The offline baseline agrees with a real Agones 1.61.0
+cluster on 261 of 261 mutants. On the cluster, all 8 runtime cases behave as the tool predicts.
 
 `testdata/agones-examples/` holds the 54 example YAML files of Agones 1.61 (Apache-2.0, unchanged).
-`testdata/backend/` holds three hand-written sets modelled on a game backend.
+`testdata/backend/` holds seven hand-written sets modelled on game backends.
 
 A kind cluster for `make oracle` and `make e2e`:
 

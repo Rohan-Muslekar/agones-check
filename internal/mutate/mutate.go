@@ -106,6 +106,9 @@ func Operators() []Operator {
 		{"unknown-field", true, "apply: rejected by strict field validation", unknownField},
 		{"invalid-bounds", true, "apply: rejected by the Agones webhook at top level; accepted when nested in a Schedule policy, which the webhook does not validate", invalidBounds},
 		{"duplicate-name", true, "apply: second document silently replaces the first", duplicateName},
+		{"fas-schedule-unset-end", true, "apply: rejected; the mutating webhook writes between.end as null, although Agones documents it as optional", scheduleUnsetEnd},
+		{"fas-second-autoscaler", true, "runtime: two autoscalers write the same Fleet's replicas, which flip between their targets", secondAutoscaler},
+		{"fleet-priority-key-typo", true, "runtime: accepted; the unknown priority key is ignored and scale-down falls back to the default order", fleetPriorityKeyTypo},
 		{"benign-rename-fleet", false, "none", renameFleet},
 		{"benign-replicas", false, "none", replicas},
 		{"benign-add-label", false, "none", addLabel},
@@ -393,6 +396,57 @@ func duplicateName(s Set) []Mutant {
 		out = append(out, Mutant{Where: d.Name() + " defined twice (copy-paste without rename)", Set: c})
 	}
 	return out
+}
+
+// scheduleUnsetEnd drops between.end from a Schedule policy, as a developer
+// would after reading that the field is optional.
+func scheduleUnsetEnd(s Set) []Mutant {
+	return each(s, "FleetAutoscaler", func(c Set, d Doc) (string, bool) {
+		for _, p := range policyMaps(m(get(d.Obj, "spec", "policy"))) {
+			if btw := m(get(p, "schedule", "between")); btw != nil {
+				if _, ok := btw["end"]; ok {
+					delete(btw, "end")
+					return d.Name() + " schedule between.end removed", true
+				}
+			}
+		}
+		return "", false
+	})
+}
+
+// secondAutoscaler adds a new FleetAutoscaler with a different policy for a
+// Fleet that already has one, without removing the old autoscaler.
+func secondAutoscaler(s Set) []Mutant {
+	var out []Mutant
+	for i, d := range s {
+		if d.Kind() != "FleetAutoscaler" || d.Name() == "" || str(get(d.Obj, "spec", "fleetName")) == "" {
+			continue
+		}
+		c := s.clone()
+		dup := Doc{File: d.File, Obj: deepCopy(d.Obj).(map[string]any)}
+		m(dup.Obj["metadata"])["name"] = d.Name() + "-new"
+		m(dup.Obj["spec"])["policy"] = map[string]any{
+			"type":   "Buffer",
+			"buffer": map[string]any{"bufferSize": int64(1), "minReplicas": int64(1), "maxReplicas": int64(5)},
+		}
+		c = append(c[:i+1], append(Set{dup}, c[i+1:]...)...)
+		out = append(out, Mutant{Where: fmt.Sprintf("second autoscaler %s-new for Fleet %s", d.Name(), get(d.Obj, "spec", "fleetName")), Set: c})
+	}
+	return out
+}
+
+func fleetPriorityKeyTypo(s Set) []Mutant {
+	return each(s, "Fleet", func(c Set, d Doc) (string, bool) {
+		ps, _ := get(d.Obj, "spec", "priorities").([]any)
+		for _, p := range ps {
+			pm := m(p)
+			if old := str(pm["key"]); old != "" {
+				pm["key"] = typo(old)
+				return fmt.Sprintf("%s priorities key %s->%s", d.Name(), old, pm["key"]), true
+			}
+		}
+		return "", false
+	})
 }
 
 // ---- benign operators ---------------------------------------------------

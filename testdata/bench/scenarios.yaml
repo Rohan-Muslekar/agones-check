@@ -6,6 +6,14 @@
   files: [testdata/backend/casual]
 - name: backend-tournament
   files: [testdata/backend/tournament]
+- name: backend-arena
+  files: [testdata/backend/arena]
+- name: backend-party
+  files: [testdata/backend/party]
+- name: backend-events
+  files: [testdata/backend/events]
+- name: backend-lab
+  files: [testdata/backend/lab]
 - name: example-counter
   files: [testdata/agones-examples/fleet.yaml, testdata/agones-examples/counterfleetautoscaler.yaml, testdata/bench/ex-allocation.yaml]
 - name: example-list

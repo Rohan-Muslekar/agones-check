@@ -184,6 +184,36 @@
     ]
   },
   {
+    "id": "backend-ranked/fas-second-autoscaler-1",
+    "scenario": "backend-ranked",
+    "operator": "fas-second-autoscaler",
+    "faulty": true,
+    "where": "second autoscaler ranked-rooms-new for Fleet ranked",
+    "file": "bench/mutants/backend-ranked/fas-second-autoscaler-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC105"
+    ]
+  },
+  {
+    "id": "backend-ranked/fleet-priority-key-typo-1",
+    "scenario": "backend-ranked",
+    "operator": "fleet-priority-key-typo",
+    "faulty": true,
+    "where": "ranked priorities key rooms-\u003eroooms",
+    "file": "bench/mutants/backend-ranked/fleet-priority-key-typo-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC113"
+    ]
+  },
+  {
     "id": "backend-ranked/benign-rename-fleet-1",
     "scenario": "backend-ranked",
     "operator": "benign-rename-fleet",
@@ -474,6 +504,54 @@
     ]
   },
   {
+    "id": "backend-casual/fas-schedule-unset-end-1",
+    "scenario": "backend-casual",
+    "operator": "fas-schedule-unset-end",
+    "faulty": true,
+    "where": "practice-weekend schedule between.end removed",
+    "file": "bench/mutants/backend-casual/fas-schedule-unset-end-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true,
+      "dry-run-dev": true,
+      "dry-run-prod": true
+    },
+    "rules": [
+      "AC005"
+    ]
+  },
+  {
+    "id": "backend-casual/fas-second-autoscaler-1",
+    "scenario": "backend-casual",
+    "operator": "fas-second-autoscaler",
+    "faulty": true,
+    "where": "second autoscaler lobby-buffer-new for Fleet lobby",
+    "file": "bench/mutants/backend-casual/fas-second-autoscaler-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC105"
+    ]
+  },
+  {
+    "id": "backend-casual/fas-second-autoscaler-2",
+    "scenario": "backend-casual",
+    "operator": "fas-second-autoscaler",
+    "faulty": true,
+    "where": "second autoscaler practice-weekend-new for Fleet practice",
+    "file": "bench/mutants/backend-casual/fas-second-autoscaler-2.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC105"
+    ]
+  },
+  {
     "id": "backend-casual/benign-rename-fleet-1",
     "scenario": "backend-casual",
     "operator": "benign-rename-fleet",
@@ -739,6 +817,21 @@
     ]
   },
   {
+    "id": "backend-tournament/fas-second-autoscaler-1",
+    "scenario": "backend-tournament",
+    "operator": "fas-second-autoscaler",
+    "faulty": true,
+    "where": "second autoscaler tournament-teams-new for Fleet tournament",
+    "file": "bench/mutants/backend-tournament/fas-second-autoscaler-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC105"
+    ]
+  },
+  {
     "id": "backend-tournament/benign-rename-fleet-1",
     "scenario": "backend-tournament",
     "operator": "benign-rename-fleet",
@@ -785,6 +878,1214 @@
     "faulty": false,
     "where": "tournament image tag bump",
     "file": "bench/mutants/backend-tournament/benign-image-tag-1.yaml",
+    "detected": {},
+    "rules": null
+  },
+  {
+    "id": "backend-arena/fas-fleetname-typo-1",
+    "scenario": "backend-arena",
+    "operator": "fas-fleetname-typo",
+    "faulty": true,
+    "where": "arena-duo-matches fleetName arena-duo-\u003earenaa-duo",
+    "file": "bench/mutants/backend-arena/fas-fleetname-typo-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC101"
+    ]
+  },
+  {
+    "id": "backend-arena/fas-fleetname-typo-2",
+    "scenario": "backend-arena",
+    "operator": "fas-fleetname-typo",
+    "faulty": true,
+    "where": "arena-squad-buffer fleetName arena-squad-\u003earena--squad",
+    "file": "bench/mutants/backend-arena/fas-fleetname-typo-2.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC101"
+    ]
+  },
+  {
+    "id": "backend-arena/fas-counter-key-typo-1",
+    "scenario": "backend-arena",
+    "operator": "fas-counter-key-typo",
+    "faulty": true,
+    "where": "arena-duo-matches counter key matches-\u003ematcches",
+    "file": "bench/mutants/backend-arena/fas-counter-key-typo-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC102"
+    ]
+  },
+  {
+    "id": "backend-arena/alloc-label-typo-1",
+    "scenario": "backend-arena",
+    "operator": "alloc-label-typo",
+    "faulty": true,
+    "where": " matchLabels game=arena-\u003eareena",
+    "file": "bench/mutants/backend-arena/alloc-label-typo-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC110"
+    ]
+  },
+  {
+    "id": "backend-arena/fleet-label-drift-1",
+    "scenario": "backend-arena",
+    "operator": "fleet-label-drift",
+    "faulty": true,
+    "where": "arena-duo template label game=arena-\u003earena-v2",
+    "file": "bench/mutants/backend-arena/fleet-label-drift-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC111"
+    ]
+  },
+  {
+    "id": "backend-arena/fleet-label-drift-2",
+    "scenario": "backend-arena",
+    "operator": "fleet-label-drift",
+    "faulty": true,
+    "where": "arena-squad template label game=arena-\u003earena-v2",
+    "file": "bench/mutants/backend-arena/fleet-label-drift-2.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC111"
+    ]
+  },
+  {
+    "id": "backend-arena/alloc-counter-key-typo-1",
+    "scenario": "backend-arena",
+    "operator": "alloc-counter-key-typo",
+    "faulty": true,
+    "where": " selector counters key matches-\u003ematcches",
+    "file": "bench/mutants/backend-arena/alloc-counter-key-typo-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC111"
+    ]
+  },
+  {
+    "id": "backend-arena/alloc-capacity-unreachable-1",
+    "scenario": "backend-arena",
+    "operator": "alloc-capacity-unreachable",
+    "faulty": true,
+    "where": " selector counters matches minAvailable-\u003e3 (capacity 2)",
+    "file": "bench/mutants/backend-arena/alloc-capacity-unreachable-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC111"
+    ]
+  },
+  {
+    "id": "backend-arena/alpha-gated-field-1",
+    "scenario": "backend-arena",
+    "operator": "alpha-gated-field",
+    "faulty": true,
+    "where": "arena-duo add players.initialCapacity (PlayerTracking, alpha)",
+    "file": "bench/mutants/backend-arena/alpha-gated-field-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true,
+      "dry-run-prod": true
+    },
+    "rules": [
+      "AC002",
+      "AC201"
+    ]
+  },
+  {
+    "id": "backend-arena/alpha-gated-field-2",
+    "scenario": "backend-arena",
+    "operator": "alpha-gated-field",
+    "faulty": true,
+    "where": "arena-squad add players.initialCapacity (PlayerTracking, alpha)",
+    "file": "bench/mutants/backend-arena/alpha-gated-field-2.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true,
+      "dry-run-prod": true
+    },
+    "rules": [
+      "AC002",
+      "AC201"
+    ]
+  },
+  {
+    "id": "backend-arena/unknown-field-1",
+    "scenario": "backend-arena",
+    "operator": "unknown-field",
+    "faulty": true,
+    "where": "arena-duo replicas-\u003ereplica",
+    "file": "bench/mutants/backend-arena/unknown-field-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true,
+      "dry-run-dev": true,
+      "dry-run-prod": true
+    },
+    "rules": [
+      "AC001"
+    ]
+  },
+  {
+    "id": "backend-arena/unknown-field-2",
+    "scenario": "backend-arena",
+    "operator": "unknown-field",
+    "faulty": true,
+    "where": "arena-squad replicas-\u003ereplica",
+    "file": "bench/mutants/backend-arena/unknown-field-2.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true,
+      "dry-run-dev": true,
+      "dry-run-prod": true
+    },
+    "rules": [
+      "AC001"
+    ]
+  },
+  {
+    "id": "backend-arena/unknown-field-3",
+    "scenario": "backend-arena",
+    "operator": "unknown-field",
+    "faulty": true,
+    "where": "arena-duo-matches counter.bufferSize-\u003ebuffersize",
+    "file": "bench/mutants/backend-arena/unknown-field-3.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true,
+      "dry-run-dev": true,
+      "dry-run-prod": true
+    },
+    "rules": [
+      "AC001",
+      "AC002"
+    ]
+  },
+  {
+    "id": "backend-arena/unknown-field-4",
+    "scenario": "backend-arena",
+    "operator": "unknown-field",
+    "faulty": true,
+    "where": "arena-squad-buffer buffer.bufferSize-\u003ebuffersize",
+    "file": "bench/mutants/backend-arena/unknown-field-4.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true,
+      "dry-run-dev": true,
+      "dry-run-prod": true
+    },
+    "rules": [
+      "AC001",
+      "AC002"
+    ]
+  },
+  {
+    "id": "backend-arena/invalid-bounds-1",
+    "scenario": "backend-arena",
+    "operator": "invalid-bounds",
+    "faulty": true,
+    "where": "arena-duo-matches counter maxCapacity below minCapacity",
+    "file": "bench/mutants/backend-arena/invalid-bounds-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true,
+      "dry-run-dev": true,
+      "dry-run-prod": true
+    },
+    "rules": [
+      "AC002"
+    ]
+  },
+  {
+    "id": "backend-arena/invalid-bounds-2",
+    "scenario": "backend-arena",
+    "operator": "invalid-bounds",
+    "faulty": true,
+    "where": "arena-squad-buffer buffer maxReplicas below minReplicas",
+    "file": "bench/mutants/backend-arena/invalid-bounds-2.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true,
+      "dry-run-dev": true,
+      "dry-run-prod": true
+    },
+    "rules": [
+      "AC002"
+    ]
+  },
+  {
+    "id": "backend-arena/duplicate-name-1",
+    "scenario": "backend-arena",
+    "operator": "duplicate-name",
+    "faulty": true,
+    "where": "arena-duo defined twice (copy-paste without rename)",
+    "file": "bench/mutants/backend-arena/duplicate-name-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC003"
+    ]
+  },
+  {
+    "id": "backend-arena/duplicate-name-2",
+    "scenario": "backend-arena",
+    "operator": "duplicate-name",
+    "faulty": true,
+    "where": "arena-squad defined twice (copy-paste without rename)",
+    "file": "bench/mutants/backend-arena/duplicate-name-2.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC003"
+    ]
+  },
+  {
+    "id": "backend-arena/fas-second-autoscaler-1",
+    "scenario": "backend-arena",
+    "operator": "fas-second-autoscaler",
+    "faulty": true,
+    "where": "second autoscaler arena-duo-matches-new for Fleet arena-duo",
+    "file": "bench/mutants/backend-arena/fas-second-autoscaler-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC105"
+    ]
+  },
+  {
+    "id": "backend-arena/fas-second-autoscaler-2",
+    "scenario": "backend-arena",
+    "operator": "fas-second-autoscaler",
+    "faulty": true,
+    "where": "second autoscaler arena-squad-buffer-new for Fleet arena-squad",
+    "file": "bench/mutants/backend-arena/fas-second-autoscaler-2.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC105"
+    ]
+  },
+  {
+    "id": "backend-arena/fleet-priority-key-typo-1",
+    "scenario": "backend-arena",
+    "operator": "fleet-priority-key-typo",
+    "faulty": true,
+    "where": "arena-duo priorities key matches-\u003ematcches",
+    "file": "bench/mutants/backend-arena/fleet-priority-key-typo-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC113"
+    ]
+  },
+  {
+    "id": "backend-arena/benign-rename-fleet-1",
+    "scenario": "backend-arena",
+    "operator": "benign-rename-fleet",
+    "faulty": false,
+    "where": "rename Fleet arena-duo-\u003earena-duo-v2 and every reference",
+    "file": "bench/mutants/backend-arena/benign-rename-fleet-1.yaml",
+    "detected": {},
+    "rules": null
+  },
+  {
+    "id": "backend-arena/benign-rename-fleet-2",
+    "scenario": "backend-arena",
+    "operator": "benign-rename-fleet",
+    "faulty": false,
+    "where": "rename Fleet arena-squad-\u003earena-squad-v2 and every reference",
+    "file": "bench/mutants/backend-arena/benign-rename-fleet-2.yaml",
+    "detected": {},
+    "rules": null
+  },
+  {
+    "id": "backend-arena/benign-replicas-1",
+    "scenario": "backend-arena",
+    "operator": "benign-replicas",
+    "faulty": false,
+    "where": "arena-duo replicas-\u003e9",
+    "file": "bench/mutants/backend-arena/benign-replicas-1.yaml",
+    "detected": {},
+    "rules": null
+  },
+  {
+    "id": "backend-arena/benign-replicas-2",
+    "scenario": "backend-arena",
+    "operator": "benign-replicas",
+    "faulty": false,
+    "where": "arena-squad replicas-\u003e9",
+    "file": "bench/mutants/backend-arena/benign-replicas-2.yaml",
+    "detected": {},
+    "rules": null
+  },
+  {
+    "id": "backend-arena/benign-add-label-1",
+    "scenario": "backend-arena",
+    "operator": "benign-add-label",
+    "faulty": false,
+    "where": "arena-duo add template label team=backend",
+    "file": "bench/mutants/backend-arena/benign-add-label-1.yaml",
+    "detected": {},
+    "rules": null
+  },
+  {
+    "id": "backend-arena/benign-add-label-2",
+    "scenario": "backend-arena",
+    "operator": "benign-add-label",
+    "faulty": false,
+    "where": "arena-squad add template label team=backend",
+    "file": "bench/mutants/backend-arena/benign-add-label-2.yaml",
+    "detected": {},
+    "rules": null
+  },
+  {
+    "id": "backend-arena/benign-raise-capacity-1",
+    "scenario": "backend-arena",
+    "operator": "benign-raise-capacity",
+    "faulty": false,
+    "where": "arena-duo counters matches capacity +10",
+    "file": "bench/mutants/backend-arena/benign-raise-capacity-1.yaml",
+    "detected": {},
+    "rules": null
+  },
+  {
+    "id": "backend-arena/benign-raise-capacity-2",
+    "scenario": "backend-arena",
+    "operator": "benign-raise-capacity",
+    "faulty": false,
+    "where": "arena-squad counters matches capacity +10",
+    "file": "bench/mutants/backend-arena/benign-raise-capacity-2.yaml",
+    "detected": {},
+    "rules": null
+  },
+  {
+    "id": "backend-arena/benign-image-tag-1",
+    "scenario": "backend-arena",
+    "operator": "benign-image-tag",
+    "faulty": false,
+    "where": "arena-duo image tag bump",
+    "file": "bench/mutants/backend-arena/benign-image-tag-1.yaml",
+    "detected": {},
+    "rules": null
+  },
+  {
+    "id": "backend-arena/benign-image-tag-2",
+    "scenario": "backend-arena",
+    "operator": "benign-image-tag",
+    "faulty": false,
+    "where": "arena-squad image tag bump",
+    "file": "bench/mutants/backend-arena/benign-image-tag-2.yaml",
+    "detected": {},
+    "rules": null
+  },
+  {
+    "id": "backend-party/fas-fleetname-typo-1",
+    "scenario": "backend-party",
+    "operator": "fas-fleetname-typo",
+    "faulty": true,
+    "where": "party-players fleetName party-\u003eparrty",
+    "file": "bench/mutants/backend-party/fas-fleetname-typo-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC101"
+    ]
+  },
+  {
+    "id": "backend-party/fas-list-key-typo-1",
+    "scenario": "backend-party",
+    "operator": "fas-list-key-typo",
+    "faulty": true,
+    "where": "party-players list key players-\u003eplayyers",
+    "file": "bench/mutants/backend-party/fas-list-key-typo-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC103"
+    ]
+  },
+  {
+    "id": "backend-party/alloc-label-typo-1",
+    "scenario": "backend-party",
+    "operator": "alloc-label-typo",
+    "faulty": true,
+    "where": " matchLabels game=party-\u003eparrty",
+    "file": "bench/mutants/backend-party/alloc-label-typo-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC110"
+    ]
+  },
+  {
+    "id": "backend-party/fleet-label-drift-1",
+    "scenario": "backend-party",
+    "operator": "fleet-label-drift",
+    "faulty": true,
+    "where": "party template label game=party-\u003eparty-v2",
+    "file": "bench/mutants/backend-party/fleet-label-drift-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC110"
+    ]
+  },
+  {
+    "id": "backend-party/alloc-list-key-typo-1",
+    "scenario": "backend-party",
+    "operator": "alloc-list-key-typo",
+    "faulty": true,
+    "where": " selector lists key players-\u003eplayyers",
+    "file": "bench/mutants/backend-party/alloc-list-key-typo-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC110"
+    ]
+  },
+  {
+    "id": "backend-party/alloc-capacity-unreachable-1",
+    "scenario": "backend-party",
+    "operator": "alloc-capacity-unreachable",
+    "faulty": true,
+    "where": " selector lists players minAvailable-\u003e7 (capacity 6)",
+    "file": "bench/mutants/backend-party/alloc-capacity-unreachable-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC111"
+    ]
+  },
+  {
+    "id": "backend-party/alpha-gated-field-1",
+    "scenario": "backend-party",
+    "operator": "alpha-gated-field",
+    "faulty": true,
+    "where": "party add players.initialCapacity (PlayerTracking, alpha)",
+    "file": "bench/mutants/backend-party/alpha-gated-field-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true,
+      "dry-run-prod": true
+    },
+    "rules": [
+      "AC002",
+      "AC201"
+    ]
+  },
+  {
+    "id": "backend-party/unknown-field-1",
+    "scenario": "backend-party",
+    "operator": "unknown-field",
+    "faulty": true,
+    "where": "party replicas-\u003ereplica",
+    "file": "bench/mutants/backend-party/unknown-field-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true,
+      "dry-run-dev": true,
+      "dry-run-prod": true
+    },
+    "rules": [
+      "AC001"
+    ]
+  },
+  {
+    "id": "backend-party/unknown-field-2",
+    "scenario": "backend-party",
+    "operator": "unknown-field",
+    "faulty": true,
+    "where": "party-players list.bufferSize-\u003ebuffersize",
+    "file": "bench/mutants/backend-party/unknown-field-2.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true,
+      "dry-run-dev": true,
+      "dry-run-prod": true
+    },
+    "rules": [
+      "AC001",
+      "AC002"
+    ]
+  },
+  {
+    "id": "backend-party/invalid-bounds-1",
+    "scenario": "backend-party",
+    "operator": "invalid-bounds",
+    "faulty": true,
+    "where": "party-players list maxCapacity below minCapacity",
+    "file": "bench/mutants/backend-party/invalid-bounds-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true,
+      "dry-run-dev": true,
+      "dry-run-prod": true
+    },
+    "rules": [
+      "AC002"
+    ]
+  },
+  {
+    "id": "backend-party/duplicate-name-1",
+    "scenario": "backend-party",
+    "operator": "duplicate-name",
+    "faulty": true,
+    "where": "party defined twice (copy-paste without rename)",
+    "file": "bench/mutants/backend-party/duplicate-name-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC003"
+    ]
+  },
+  {
+    "id": "backend-party/fas-second-autoscaler-1",
+    "scenario": "backend-party",
+    "operator": "fas-second-autoscaler",
+    "faulty": true,
+    "where": "second autoscaler party-players-new for Fleet party",
+    "file": "bench/mutants/backend-party/fas-second-autoscaler-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC105"
+    ]
+  },
+  {
+    "id": "backend-party/fleet-priority-key-typo-1",
+    "scenario": "backend-party",
+    "operator": "fleet-priority-key-typo",
+    "faulty": true,
+    "where": "party priorities key players-\u003eplayyers",
+    "file": "bench/mutants/backend-party/fleet-priority-key-typo-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC113"
+    ]
+  },
+  {
+    "id": "backend-party/benign-rename-fleet-1",
+    "scenario": "backend-party",
+    "operator": "benign-rename-fleet",
+    "faulty": false,
+    "where": "rename Fleet party-\u003eparty-v2 and every reference",
+    "file": "bench/mutants/backend-party/benign-rename-fleet-1.yaml",
+    "detected": {},
+    "rules": null
+  },
+  {
+    "id": "backend-party/benign-replicas-1",
+    "scenario": "backend-party",
+    "operator": "benign-replicas",
+    "faulty": false,
+    "where": "party replicas-\u003e9",
+    "file": "bench/mutants/backend-party/benign-replicas-1.yaml",
+    "detected": {},
+    "rules": null
+  },
+  {
+    "id": "backend-party/benign-add-label-1",
+    "scenario": "backend-party",
+    "operator": "benign-add-label",
+    "faulty": false,
+    "where": "party add template label team=backend",
+    "file": "bench/mutants/backend-party/benign-add-label-1.yaml",
+    "detected": {},
+    "rules": null
+  },
+  {
+    "id": "backend-party/benign-raise-capacity-1",
+    "scenario": "backend-party",
+    "operator": "benign-raise-capacity",
+    "faulty": false,
+    "where": "party lists players capacity +10",
+    "file": "bench/mutants/backend-party/benign-raise-capacity-1.yaml",
+    "detected": {},
+    "rules": null
+  },
+  {
+    "id": "backend-party/benign-image-tag-1",
+    "scenario": "backend-party",
+    "operator": "benign-image-tag",
+    "faulty": false,
+    "where": "party image tag bump",
+    "file": "bench/mutants/backend-party/benign-image-tag-1.yaml",
+    "detected": {},
+    "rules": null
+  },
+  {
+    "id": "backend-events/fas-fleetname-typo-1",
+    "scenario": "backend-events",
+    "operator": "fas-fleetname-typo",
+    "faulty": true,
+    "where": "event-sessions fleetName event-hosts-\u003eevent--hosts",
+    "file": "bench/mutants/backend-events/fas-fleetname-typo-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC101"
+    ]
+  },
+  {
+    "id": "backend-events/fas-counter-key-typo-1",
+    "scenario": "backend-events",
+    "operator": "fas-counter-key-typo",
+    "faulty": true,
+    "where": "event-sessions counter key sessions-\u003esessiions",
+    "file": "bench/mutants/backend-events/fas-counter-key-typo-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC102"
+    ]
+  },
+  {
+    "id": "backend-events/alloc-label-typo-1",
+    "scenario": "backend-events",
+    "operator": "alloc-label-typo",
+    "faulty": true,
+    "where": " matchLabels game=events-\u003eevennts",
+    "file": "bench/mutants/backend-events/alloc-label-typo-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC110"
+    ]
+  },
+  {
+    "id": "backend-events/fleet-label-drift-1",
+    "scenario": "backend-events",
+    "operator": "fleet-label-drift",
+    "faulty": true,
+    "where": "event-hosts template label game=events-\u003eevents-v2",
+    "file": "bench/mutants/backend-events/fleet-label-drift-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC110"
+    ]
+  },
+  {
+    "id": "backend-events/alloc-counter-key-typo-1",
+    "scenario": "backend-events",
+    "operator": "alloc-counter-key-typo",
+    "faulty": true,
+    "where": " selector counters key sessions-\u003esessiions",
+    "file": "bench/mutants/backend-events/alloc-counter-key-typo-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC110"
+    ]
+  },
+  {
+    "id": "backend-events/alloc-capacity-unreachable-1",
+    "scenario": "backend-events",
+    "operator": "alloc-capacity-unreachable",
+    "faulty": true,
+    "where": " selector counters sessions minAvailable-\u003e11 (capacity 10)",
+    "file": "bench/mutants/backend-events/alloc-capacity-unreachable-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC110"
+    ]
+  },
+  {
+    "id": "backend-events/alpha-gated-field-1",
+    "scenario": "backend-events",
+    "operator": "alpha-gated-field",
+    "faulty": true,
+    "where": "event-hosts add players.initialCapacity (PlayerTracking, alpha)",
+    "file": "bench/mutants/backend-events/alpha-gated-field-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true,
+      "dry-run-prod": true
+    },
+    "rules": [
+      "AC002",
+      "AC201"
+    ]
+  },
+  {
+    "id": "backend-events/unknown-field-1",
+    "scenario": "backend-events",
+    "operator": "unknown-field",
+    "faulty": true,
+    "where": "event-hosts replicas-\u003ereplica",
+    "file": "bench/mutants/backend-events/unknown-field-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true,
+      "dry-run-dev": true,
+      "dry-run-prod": true
+    },
+    "rules": [
+      "AC001"
+    ]
+  },
+  {
+    "id": "backend-events/unknown-field-2",
+    "scenario": "backend-events",
+    "operator": "unknown-field",
+    "faulty": true,
+    "where": "event-sessions counter.bufferSize-\u003ebuffersize",
+    "file": "bench/mutants/backend-events/unknown-field-2.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true,
+      "dry-run-dev": true,
+      "dry-run-prod": true
+    },
+    "rules": [
+      "AC001",
+      "AC004"
+    ]
+  },
+  {
+    "id": "backend-events/invalid-bounds-1",
+    "scenario": "backend-events",
+    "operator": "invalid-bounds",
+    "faulty": true,
+    "where": "event-sessions counter maxCapacity below minCapacity",
+    "file": "bench/mutants/backend-events/invalid-bounds-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC004"
+    ]
+  },
+  {
+    "id": "backend-events/duplicate-name-1",
+    "scenario": "backend-events",
+    "operator": "duplicate-name",
+    "faulty": true,
+    "where": "event-hosts defined twice (copy-paste without rename)",
+    "file": "bench/mutants/backend-events/duplicate-name-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC003"
+    ]
+  },
+  {
+    "id": "backend-events/fas-schedule-unset-end-1",
+    "scenario": "backend-events",
+    "operator": "fas-schedule-unset-end",
+    "faulty": true,
+    "where": "event-sessions schedule between.end removed",
+    "file": "bench/mutants/backend-events/fas-schedule-unset-end-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true,
+      "dry-run-dev": true,
+      "dry-run-prod": true
+    },
+    "rules": [
+      "AC005"
+    ]
+  },
+  {
+    "id": "backend-events/fas-second-autoscaler-1",
+    "scenario": "backend-events",
+    "operator": "fas-second-autoscaler",
+    "faulty": true,
+    "where": "second autoscaler event-sessions-new for Fleet event-hosts",
+    "file": "bench/mutants/backend-events/fas-second-autoscaler-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC105"
+    ]
+  },
+  {
+    "id": "backend-events/benign-rename-fleet-1",
+    "scenario": "backend-events",
+    "operator": "benign-rename-fleet",
+    "faulty": false,
+    "where": "rename Fleet event-hosts-\u003eevent-hosts-v2 and every reference",
+    "file": "bench/mutants/backend-events/benign-rename-fleet-1.yaml",
+    "detected": {},
+    "rules": null
+  },
+  {
+    "id": "backend-events/benign-replicas-1",
+    "scenario": "backend-events",
+    "operator": "benign-replicas",
+    "faulty": false,
+    "where": "event-hosts replicas-\u003e9",
+    "file": "bench/mutants/backend-events/benign-replicas-1.yaml",
+    "detected": {},
+    "rules": null
+  },
+  {
+    "id": "backend-events/benign-add-label-1",
+    "scenario": "backend-events",
+    "operator": "benign-add-label",
+    "faulty": false,
+    "where": "event-hosts add template label team=backend",
+    "file": "bench/mutants/backend-events/benign-add-label-1.yaml",
+    "detected": {},
+    "rules": null
+  },
+  {
+    "id": "backend-events/benign-raise-capacity-1",
+    "scenario": "backend-events",
+    "operator": "benign-raise-capacity",
+    "faulty": false,
+    "where": "event-hosts counters sessions capacity +10",
+    "file": "bench/mutants/backend-events/benign-raise-capacity-1.yaml",
+    "detected": {},
+    "rules": null
+  },
+  {
+    "id": "backend-events/benign-image-tag-1",
+    "scenario": "backend-events",
+    "operator": "benign-image-tag",
+    "faulty": false,
+    "where": "event-hosts image tag bump",
+    "file": "bench/mutants/backend-events/benign-image-tag-1.yaml",
+    "detected": {},
+    "rules": null
+  },
+  {
+    "id": "backend-lab/fas-fleetname-typo-1",
+    "scenario": "backend-lab",
+    "operator": "fas-fleetname-typo",
+    "faulty": true,
+    "where": "bots-buffer fleetName bots-\u003ebotts",
+    "file": "bench/mutants/backend-lab/fas-fleetname-typo-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC101"
+    ]
+  },
+  {
+    "id": "backend-lab/alloc-label-typo-1",
+    "scenario": "backend-lab",
+    "operator": "alloc-label-typo",
+    "faulty": true,
+    "where": " matchLabels game=lab-\u003elaab",
+    "file": "bench/mutants/backend-lab/alloc-label-typo-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC110"
+    ]
+  },
+  {
+    "id": "backend-lab/fleet-label-drift-1",
+    "scenario": "backend-lab",
+    "operator": "fleet-label-drift",
+    "faulty": true,
+    "where": "bots template label game=lab-\u003elab-v2",
+    "file": "bench/mutants/backend-lab/fleet-label-drift-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC111"
+    ]
+  },
+  {
+    "id": "backend-lab/alloc-counter-key-typo-1",
+    "scenario": "backend-lab",
+    "operator": "alloc-counter-key-typo",
+    "faulty": true,
+    "where": " selector counters key slots-\u003esloots",
+    "file": "bench/mutants/backend-lab/alloc-counter-key-typo-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC111"
+    ]
+  },
+  {
+    "id": "backend-lab/alloc-capacity-unreachable-1",
+    "scenario": "backend-lab",
+    "operator": "alloc-capacity-unreachable",
+    "faulty": true,
+    "where": " selector counters slots minAvailable-\u003e4 (capacity 3)",
+    "file": "bench/mutants/backend-lab/alloc-capacity-unreachable-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC111"
+    ]
+  },
+  {
+    "id": "backend-lab/alpha-gated-field-1",
+    "scenario": "backend-lab",
+    "operator": "alpha-gated-field",
+    "faulty": true,
+    "where": "bots add players.initialCapacity (PlayerTracking, alpha)",
+    "file": "bench/mutants/backend-lab/alpha-gated-field-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true,
+      "dry-run-prod": true
+    },
+    "rules": [
+      "AC002",
+      "AC201"
+    ]
+  },
+  {
+    "id": "backend-lab/unknown-field-1",
+    "scenario": "backend-lab",
+    "operator": "unknown-field",
+    "faulty": true,
+    "where": "bots replicas-\u003ereplica",
+    "file": "bench/mutants/backend-lab/unknown-field-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true,
+      "dry-run-dev": true,
+      "dry-run-prod": true
+    },
+    "rules": [
+      "AC001"
+    ]
+  },
+  {
+    "id": "backend-lab/unknown-field-2",
+    "scenario": "backend-lab",
+    "operator": "unknown-field",
+    "faulty": true,
+    "where": "bots-buffer buffer.bufferSize-\u003ebuffersize",
+    "file": "bench/mutants/backend-lab/unknown-field-2.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true,
+      "dry-run-dev": true,
+      "dry-run-prod": true
+    },
+    "rules": [
+      "AC001",
+      "AC002"
+    ]
+  },
+  {
+    "id": "backend-lab/invalid-bounds-1",
+    "scenario": "backend-lab",
+    "operator": "invalid-bounds",
+    "faulty": true,
+    "where": "bots-buffer buffer maxReplicas below minReplicas",
+    "file": "bench/mutants/backend-lab/invalid-bounds-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true,
+      "dry-run-dev": true,
+      "dry-run-prod": true
+    },
+    "rules": [
+      "AC002"
+    ]
+  },
+  {
+    "id": "backend-lab/duplicate-name-1",
+    "scenario": "backend-lab",
+    "operator": "duplicate-name",
+    "faulty": true,
+    "where": "bots defined twice (copy-paste without rename)",
+    "file": "bench/mutants/backend-lab/duplicate-name-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC003"
+    ]
+  },
+  {
+    "id": "backend-lab/fas-second-autoscaler-1",
+    "scenario": "backend-lab",
+    "operator": "fas-second-autoscaler",
+    "faulty": true,
+    "where": "second autoscaler bots-buffer-new for Fleet bots",
+    "file": "bench/mutants/backend-lab/fas-second-autoscaler-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC105"
+    ]
+  },
+  {
+    "id": "backend-lab/benign-rename-fleet-1",
+    "scenario": "backend-lab",
+    "operator": "benign-rename-fleet",
+    "faulty": false,
+    "where": "rename Fleet bots-\u003ebots-v2 and every reference",
+    "file": "bench/mutants/backend-lab/benign-rename-fleet-1.yaml",
+    "detected": {},
+    "rules": null
+  },
+  {
+    "id": "backend-lab/benign-replicas-1",
+    "scenario": "backend-lab",
+    "operator": "benign-replicas",
+    "faulty": false,
+    "where": "bots replicas-\u003e9",
+    "file": "bench/mutants/backend-lab/benign-replicas-1.yaml",
+    "detected": {},
+    "rules": null
+  },
+  {
+    "id": "backend-lab/benign-add-label-1",
+    "scenario": "backend-lab",
+    "operator": "benign-add-label",
+    "faulty": false,
+    "where": "bots add template label team=backend",
+    "file": "bench/mutants/backend-lab/benign-add-label-1.yaml",
+    "detected": {},
+    "rules": null
+  },
+  {
+    "id": "backend-lab/benign-raise-capacity-1",
+    "scenario": "backend-lab",
+    "operator": "benign-raise-capacity",
+    "faulty": false,
+    "where": "bots counters slots capacity +10",
+    "file": "bench/mutants/backend-lab/benign-raise-capacity-1.yaml",
+    "detected": {},
+    "rules": null
+  },
+  {
+    "id": "backend-lab/benign-image-tag-1",
+    "scenario": "backend-lab",
+    "operator": "benign-image-tag",
+    "faulty": false,
+    "where": "bots image tag bump",
+    "file": "bench/mutants/backend-lab/benign-image-tag-1.yaml",
     "detected": {},
     "rules": null
   },
@@ -991,6 +2292,36 @@
     ]
   },
   {
+    "id": "example-counter/fas-second-autoscaler-1",
+    "scenario": "example-counter",
+    "operator": "fas-second-autoscaler",
+    "faulty": true,
+    "where": "second autoscaler fleet-autoscaler-counter-new for Fleet fleet-example",
+    "file": "bench/mutants/example-counter/fas-second-autoscaler-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC105"
+    ]
+  },
+  {
+    "id": "example-counter/fleet-priority-key-typo-1",
+    "scenario": "example-counter",
+    "operator": "fleet-priority-key-typo",
+    "faulty": true,
+    "where": "fleet-example priorities key rooms-\u003eroooms",
+    "file": "bench/mutants/example-counter/fleet-priority-key-typo-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC113"
+    ]
+  },
+  {
     "id": "example-counter/benign-rename-fleet-1",
     "scenario": "example-counter",
     "operator": "benign-rename-fleet",
@@ -1162,6 +2493,36 @@
     ]
   },
   {
+    "id": "example-list/fas-second-autoscaler-1",
+    "scenario": "example-list",
+    "operator": "fas-second-autoscaler",
+    "faulty": true,
+    "where": "second autoscaler fleet-autoscaler-list-new for Fleet fleet-example",
+    "file": "bench/mutants/example-list/fas-second-autoscaler-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC105"
+    ]
+  },
+  {
+    "id": "example-list/fleet-priority-key-typo-1",
+    "scenario": "example-list",
+    "operator": "fleet-priority-key-typo",
+    "faulty": true,
+    "where": "fleet-example priorities key rooms-\u003eroooms",
+    "file": "bench/mutants/example-list/fleet-priority-key-typo-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC113"
+    ]
+  },
+  {
     "id": "example-list/benign-rename-fleet-1",
     "scenario": "example-list",
     "operator": "benign-rename-fleet",
@@ -1317,6 +2678,36 @@
     ]
   },
   {
+    "id": "example-buffer/fas-second-autoscaler-1",
+    "scenario": "example-buffer",
+    "operator": "fas-second-autoscaler",
+    "faulty": true,
+    "where": "second autoscaler fleet-autoscaler-example-new for Fleet fleet-example",
+    "file": "bench/mutants/example-buffer/fas-second-autoscaler-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC105"
+    ]
+  },
+  {
+    "id": "example-buffer/fleet-priority-key-typo-1",
+    "scenario": "example-buffer",
+    "operator": "fleet-priority-key-typo",
+    "faulty": true,
+    "where": "fleet-example priorities key rooms-\u003eroooms",
+    "file": "bench/mutants/example-buffer/fleet-priority-key-typo-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC113"
+    ]
+  },
+  {
     "id": "example-buffer/benign-rename-fleet-1",
     "scenario": "example-buffer",
     "operator": "benign-rename-fleet",
@@ -1467,6 +2858,54 @@
     },
     "rules": [
       "AC003"
+    ]
+  },
+  {
+    "id": "example-schedule/fas-schedule-unset-end-1",
+    "scenario": "example-schedule",
+    "operator": "fas-schedule-unset-end",
+    "faulty": true,
+    "where": "schedule-fleet-autoscaler schedule between.end removed",
+    "file": "bench/mutants/example-schedule/fas-schedule-unset-end-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true,
+      "dry-run-dev": true,
+      "dry-run-prod": true
+    },
+    "rules": [
+      "AC005"
+    ]
+  },
+  {
+    "id": "example-schedule/fas-second-autoscaler-1",
+    "scenario": "example-schedule",
+    "operator": "fas-second-autoscaler",
+    "faulty": true,
+    "where": "second autoscaler schedule-fleet-autoscaler-new for Fleet fleet-example",
+    "file": "bench/mutants/example-schedule/fas-second-autoscaler-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC105"
+    ]
+  },
+  {
+    "id": "example-schedule/fleet-priority-key-typo-1",
+    "scenario": "example-schedule",
+    "operator": "fleet-priority-key-typo",
+    "faulty": true,
+    "where": "fleet-example priorities key rooms-\u003eroooms",
+    "file": "bench/mutants/example-schedule/fleet-priority-key-typo-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC113"
     ]
   },
   {
@@ -1639,6 +3078,54 @@
     ]
   },
   {
+    "id": "example-chain/fas-schedule-unset-end-1",
+    "scenario": "example-chain",
+    "operator": "fas-schedule-unset-end",
+    "faulty": true,
+    "where": "chain-fleet-autoscaler schedule between.end removed",
+    "file": "bench/mutants/example-chain/fas-schedule-unset-end-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-error": true,
+      "agones-check-multi": true,
+      "dry-run-dev": true,
+      "dry-run-prod": true
+    },
+    "rules": [
+      "AC005"
+    ]
+  },
+  {
+    "id": "example-chain/fas-second-autoscaler-1",
+    "scenario": "example-chain",
+    "operator": "fas-second-autoscaler",
+    "faulty": true,
+    "where": "second autoscaler chain-fleet-autoscaler-new for Fleet fleet-example",
+    "file": "bench/mutants/example-chain/fas-second-autoscaler-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC105"
+    ]
+  },
+  {
+    "id": "example-chain/fleet-priority-key-typo-1",
+    "scenario": "example-chain",
+    "operator": "fleet-priority-key-typo",
+    "faulty": true,
+    "where": "fleet-example priorities key rooms-\u003eroooms",
+    "file": "bench/mutants/example-chain/fleet-priority-key-typo-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC113"
+    ]
+  },
+  {
     "id": "example-chain/benign-rename-fleet-1",
     "scenario": "example-chain",
     "operator": "benign-rename-fleet",
@@ -1754,6 +3241,21 @@
     },
     "rules": [
       "AC003"
+    ]
+  },
+  {
+    "id": "example-webhook/fas-second-autoscaler-1",
+    "scenario": "example-webhook",
+    "operator": "fas-second-autoscaler",
+    "faulty": true,
+    "where": "second autoscaler webhook-fleet-autoscaler-new for Fleet simple-game-server",
+    "file": "bench/mutants/example-webhook/fas-second-autoscaler-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC105"
     ]
   },
   {
@@ -1902,6 +3404,21 @@
     ]
   },
   {
+    "id": "example-simple-game-server/fas-second-autoscaler-1",
+    "scenario": "example-simple-game-server",
+    "operator": "fas-second-autoscaler",
+    "faulty": true,
+    "where": "second autoscaler simple-game-server-autoscaler-new for Fleet simple-game-server",
+    "file": "bench/mutants/example-simple-game-server/fas-second-autoscaler-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC105"
+    ]
+  },
+  {
     "id": "example-simple-game-server/benign-rename-fleet-1",
     "scenario": "example-simple-game-server",
     "operator": "benign-rename-fleet",
@@ -2044,6 +3561,21 @@
     },
     "rules": [
       "AC003"
+    ]
+  },
+  {
+    "id": "example-xonotic/fas-second-autoscaler-1",
+    "scenario": "example-xonotic",
+    "operator": "fas-second-autoscaler",
+    "faulty": true,
+    "where": "second autoscaler xonotic-autoscaler-new for Fleet xonotic",
+    "file": "bench/mutants/example-xonotic/fas-second-autoscaler-1.yaml",
+    "detected": {
+      "agones-check": true,
+      "agones-check-multi": true
+    },
+    "rules": [
+      "AC105"
     ]
   },
   {

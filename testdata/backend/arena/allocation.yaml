@@ -1,0 +1,32 @@
+# Matchmaker request: fill a duo server that already runs a match, then a
+# fresh duo server, and fall back to a squad server.
+apiVersion: allocation.agones.dev/v1
+kind: GameServerAllocation
+metadata:
+  generateName: arena-
+  namespace: arena
+spec:
+  scheduling: Packed
+  selectors:
+    - matchLabels:
+        game: arena
+        size: duo
+      gameServerState: Allocated
+      counters:
+        matches:
+          minAvailable: 1
+    - matchLabels:
+        game: arena
+        size: duo
+      gameServerState: Ready
+      counters:
+        matches:
+          minAvailable: 1
+    - matchLabels:
+        game: arena
+        size: squad
+      gameServerState: Ready
+  counters:
+    matches:
+      action: Increment
+      amount: 1
