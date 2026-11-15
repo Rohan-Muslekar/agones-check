@@ -161,12 +161,14 @@ Agones keeps feature gates in a package-level variable, so environments are chec
 | `make perf` | check time vs. number of objects and environments | `bench/results/perf.md` |
 | `make oracle` | sends every mutant to a real cluster with `--dry-run=server`, compares with the offline baseline | `bench/results/oracle.md` |
 | `make oracle-dev` | same, on a cluster with every alpha gate on, compared with the dev baseline | `bench/results/oracle-dev.md` |
+| `make oracle-version V=1.54` | same, on a cluster running an older Agones release, compared with that release's profile | `bench/results/oracle-1.54.md` |
 | `scripts/realworld.sh` | runs the tool on 438 public Agones manifests from 152 GitHub repositories (pinned commits); triage in `realworld.md` | `bench/results/realworld-findings.tsv` |
 | `make e2e` | applies seeded mistakes to a kind cluster and records what Agones actually does | `bench/results/e2e.md` |
 
 Current results: agones-check finds 174 of 174 faulty mutants with no false alarm on 87 benign ones; `kubectl
 --dry-run=server` finds 70 (prod gates) or 51 (dev gates). Both offline baselines agree with a real Agones 1.61.0
-cluster on 261 of 261 mutants (prod gates, and every alpha gate on). On the cluster, all 8 runtime cases behave as the tool predicts.
+cluster on 261 of 261 mutants (prod gates, and every alpha gate on), and the `1.54` profile agrees with a real Agones
+1.54.0 cluster (Kubernetes 1.33) on 261 of 261. On the cluster, all 8 runtime cases behave as the tool predicts.
 On 389 objects from 126 public repositories it finds confirmed mistakes in 17, 11 of which pass `kubectl --dry-run=server`
 (`bench/results/realworld.md`).
 
@@ -186,12 +188,15 @@ On rootless Podman, raise the inotify limit first or kube-proxy crashes with "to
 `echo 'fs.inotify.max_user_instances = 512' | sudo tee /etc/sysctl.d/99-inotify.conf && sudo sysctl --system`. `make e2e` creates the `agones-sdk` service account in its own
 namespace. For `make oracle-dev`, switch the alpha gates on first and back off afterwards:
 `helm upgrade agones agones/agones --version 1.61.0 -n agones-system --reuse-values --set agones.featureGates='PlayerAllocationFilter=true&PlayerTracking=true&WasmAutoscaler=true'`
-(and `--set agones.featureGates=''` to restore).
+(and `--set agones.featureGates=''` to restore). For `make oracle-version V=1.54`, use a second cluster with a
+Kubernetes version that release supports:
+`kind create cluster --name agones-154 --image kindest/node:v1.33.7` and `helm install ... --version 1.54.0`.
 
 ## Limitations
 
 - Validation code is Agones 1.61. Older-version profiles change the gate settings, not the code, so a check that changed
-  between versions is evaluated with 1.61 semantics.
+  between versions is evaluated with 1.61 semantics. The `1.54` profile matched a real 1.54.0 cluster on all 261
+  mutants; other releases are untested on a cluster.
 - Counter and list *values* change at runtime; AC110 only uses what is knowable before deployment (keys, labels,
   capacities).
 - Only Agones resources are checked. Templated values (`$CA_BUNDLE`) must be rendered before checking.
