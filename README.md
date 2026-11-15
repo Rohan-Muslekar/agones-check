@@ -160,11 +160,12 @@ Agones keeps feature gates in a package-level variable, so environments are chec
 | `make bench` | mutation benchmark: 261 mutants of 18 scenarios, against `kubectl --dry-run=server` | `bench/results/mutation.md` |
 | `make perf` | check time vs. number of objects and environments | `bench/results/perf.md` |
 | `make oracle` | sends every mutant to a real cluster with `--dry-run=server`, compares with the offline baseline | `bench/results/oracle.md` |
+| `make oracle-dev` | same, on a cluster with every alpha gate on, compared with the dev baseline | `bench/results/oracle-dev.md` |
 | `make e2e` | applies seeded mistakes to a kind cluster and records what Agones actually does | `bench/results/e2e.md` |
 
 Current results: agones-check finds 174 of 174 faulty mutants with no false alarm on 87 benign ones; `kubectl
---dry-run=server` finds 70 (prod gates) or 51 (dev gates). The offline baseline agrees with a real Agones 1.61.0
-cluster on 261 of 261 mutants. On the cluster, all 8 runtime cases behave as the tool predicts.
+--dry-run=server` finds 70 (prod gates) or 51 (dev gates). Both offline baselines agree with a real Agones 1.61.0
+cluster on 261 of 261 mutants (prod gates, and every alpha gate on). On the cluster, all 8 runtime cases behave as the tool predicts.
 
 `testdata/agones-examples/` holds the 54 example YAML files of Agones 1.61 (Apache-2.0, unchanged).
 `testdata/backend/` holds seven hand-written sets modelled on game backends.
@@ -180,7 +181,9 @@ helm install agones agones/agones --version 1.61.0 -n agones-system --create-nam
 On rootless Podman, raise the inotify limit first or kube-proxy crashes with "too many open files". Once per machine
 (persists across reboots):
 `echo 'fs.inotify.max_user_instances = 512' | sudo tee /etc/sysctl.d/99-inotify.conf && sudo sysctl --system`. `make e2e` creates the `agones-sdk` service account in its own
-namespace.
+namespace. For `make oracle-dev`, switch the alpha gates on first and back off afterwards:
+`helm upgrade agones agones/agones --version 1.61.0 -n agones-system --reuse-values --set agones.featureGates='PlayerAllocationFilter=true&PlayerTracking=true&WasmAutoscaler=true'`
+(and `--set agones.featureGates=''` to restore).
 
 ## Limitations
 

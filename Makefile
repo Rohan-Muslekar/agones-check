@@ -3,7 +3,7 @@ GO ?= go
 BIN := bin
 KUBECONFIG ?= $(HOME)/.kube/config
 
-.PHONY: help build plugin test cover lint bench perf oracle e2e examples clean
+.PHONY: help build plugin test cover lint bench perf oracle oracle-dev e2e examples clean
 
 help: ## list targets
 	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  %-10s %s\n", $$1, $$2}'
@@ -33,6 +33,10 @@ perf: ## performance benchmark (RQ3) -> bench/results/perf.md
 oracle: bench ## dry-run every mutant on the current cluster and compare -> bench/results/oracle.md
 	$(GO) run ./cmd/oracle -mutants bench/mutants > bench/results/oracle.tsv
 	$(GO) run ./cmd/bench -oracle bench/results/oracle.tsv -out bench/results
+
+oracle-dev: bench ## same as oracle, on a cluster with every alpha gate on -> bench/results/oracle-dev.md
+	$(GO) run ./cmd/oracle -mutants bench/mutants > bench/results/oracle-dev.tsv
+	$(GO) run ./cmd/bench -oracle bench/results/oracle-dev.tsv -oracle-env dev -out bench/results
 
 e2e: ## runtime checks on a kind cluster with Agones (scripts/e2e-runtime.sh)
 	./scripts/e2e-runtime.sh

@@ -56,7 +56,8 @@ func main() {
 	out := flag.String("out", "bench/results", "output directory")
 	mutDir := flag.String("mutants", "bench/mutants", "where mutant manifests are written")
 	perf := flag.Bool("perf", false, "run the performance benchmark instead")
-	oracle := flag.String("oracle", "", "compare a cluster oracle TSV (from scripts/oracle.sh) with the dry-run-prod baseline")
+	oracle := flag.String("oracle", "", "compare a cluster oracle TSV (from go run ./cmd/oracle) with a dry-run baseline")
+	oracleEnv := flag.String("oracle-env", "prod", "which baseline the oracle cluster runs: prod (default gates) or dev (every alpha gate on)")
 	flag.Parse()
 	if err := os.MkdirAll(*out, 0o755); err != nil {
 		fail(err)
@@ -65,7 +66,7 @@ func main() {
 	case *perf:
 		fail(runPerf(*out))
 	case *oracle != "":
-		fail(compareOracle(*oracle, *out))
+		fail(compareOracle(*oracle, *oracleEnv, *out))
 	default:
 		fail(runMutation(*scen, *out, *mutDir))
 	}
@@ -369,9 +370,20 @@ func summarize(rs []mutantResult, clean []string, nScen int) string {
 }
 
 // compareOracle reads "mutant-id<TAB>accepted|rejected<TAB>message" lines
-// produced by scripts/oracle.sh and checks that the offline webhook-prod
-// baseline agrees with a real API server.
-func compareOracle(tsv, out string) error {
+// produced by go run ./cmd/oracle and checks that the offline dry-run
+// baseline for env (prod or dev) agrees with a real API server running the
+// same feature gates.
+func compareOracle(tsv, env, out string) error {
+	var gates, file string
+	switch env {
+	case "prod":
+		gates, file = "default (prod) gates", "oracle.md"
+	case "dev":
+		gates, file = "every alpha gate on (dev: PlayerAllocationFilter, PlayerTracking, WasmAutoscaler)", "oracle-dev.md"
+	default:
+		return fmt.Errorf("-oracle-env must be prod or dev, got %q", env)
+	}
+	baseline := "dry-run-" + env
 	js, err := os.ReadFile(filepath.Join(out, "mutants.json"))
 	if err != nil {
 		return err
@@ -405,22 +417,22 @@ func compareOracle(tsv, out string) error {
 		}
 		total++
 		clusterRejected := parts[1] == "rejected"
-		if clusterRejected == r.Detected["dry-run-prod"] {
+		if clusterRejected == r.Detected[baseline] {
 			agree++
 		} else {
 			msg := ""
 			if len(parts) > 2 {
 				msg = parts[2]
 			}
-			dis = append(dis, fmt.Sprintf("- %s: cluster %s, offline baseline rejected=%v. %s", r.ID, parts[1], r.Detected["dry-run-prod"], msg))
+			dis = append(dis, fmt.Sprintf("- %s: cluster %s, offline baseline rejected=%v. %s", r.ID, parts[1], r.Detected[baseline], msg))
 		}
 	}
-	fmt.Fprintf(&b, "# Cluster oracle vs offline webhook baseline\n\nGenerated %s. `kubectl apply --dry-run=server` on a kind cluster running Agones %s with default (prod) gates.\n\n",
-		time.Now().Format("2006-01-02 15:04 MST"), profile.CheckerVersion)
+	fmt.Fprintf(&b, "# Cluster oracle vs offline webhook baseline\n\nGenerated %s. `kubectl apply --dry-run=server` on a kind cluster running Agones %s with %s, compared with the offline %s baseline.\n\n",
+		time.Now().Format("2006-01-02 15:04 MST"), profile.CheckerVersion, gates, baseline)
 	fmt.Fprintf(&b, "Agreement: %d / %d mutants (%.1f%%).\n\n", agree, total, 100*float64(agree)/float64(max(total, 1)))
 	if len(dis) > 0 {
 		b.WriteString("Disagreements:\n\n" + strings.Join(dis, "\n") + "\n")
 	}
 	fmt.Print(b.String())
-	return os.WriteFile(filepath.Join(out, "oracle.md"), []byte(b.String()), 0o644)
+	return os.WriteFile(filepath.Join(out, file), []byte(b.String()), 0o644)
 }
