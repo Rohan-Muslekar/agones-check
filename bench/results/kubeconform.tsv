@@ -1,0 +1,262 @@
+id	operator	faulty	kubeconform	agones-check	dry-run-prod	message
+backend-ranked/fas-fleetname-typo-1	fas-fleetname-typo	True	False	True	False	
+backend-ranked/fas-counter-key-typo-1	fas-counter-key-typo	True	False	True	False	
+backend-ranked/alloc-label-typo-1	alloc-label-typo	True	False	True	False	
+backend-ranked/fleet-label-drift-1	fleet-label-drift	True	False	True	False	
+backend-ranked/alloc-counter-key-typo-1	alloc-counter-key-typo	True	False	True	False	
+backend-ranked/alloc-capacity-unreachable-1	alloc-capacity-unreachable	True	False	True	False	
+backend-ranked/alpha-gated-field-1	alpha-gated-field	True	False	True	True	
+backend-ranked/unknown-field-1	unknown-field	True	True	True	True	Fleet/ranked: problem validating schema. Check JSON formatting: jsonschema: '/spec' does not validate with file:///tmp/tmph2vqn3_u/sch
+backend-ranked/unknown-field-2	unknown-field	True	True	True	True	FleetAutoscaler/ranked-rooms: problem validating schema. Check JSON formatting: jsonschema: '/spec/policy/counter' does not validate with file:///tmp/
+backend-ranked/invalid-bounds-1	invalid-bounds	True	False	True	True	
+backend-ranked/duplicate-name-1	duplicate-name	True	False	True	False	
+backend-ranked/fas-second-autoscaler-1	fas-second-autoscaler	True	False	True	False	
+backend-ranked/fleet-priority-key-typo-1	fleet-priority-key-typo	True	False	True	False	
+backend-ranked/benign-rename-fleet-1	benign-rename-fleet	False	False	False	False	
+backend-ranked/benign-replicas-1	benign-replicas	False	False	False	False	
+backend-ranked/benign-add-label-1	benign-add-label	False	False	False	False	
+backend-ranked/benign-raise-capacity-1	benign-raise-capacity	False	False	False	False	
+backend-ranked/benign-image-tag-1	benign-image-tag	False	False	False	False	
+backend-casual/fas-fleetname-typo-1	fas-fleetname-typo	True	False	True	False	
+backend-casual/fas-fleetname-typo-2	fas-fleetname-typo	True	False	True	False	
+backend-casual/alloc-label-typo-1	alloc-label-typo	True	False	True	False	
+backend-casual/fleet-label-drift-1	fleet-label-drift	True	False	True	False	
+backend-casual/alpha-gated-field-1	alpha-gated-field	True	False	True	True	
+backend-casual/alpha-gated-field-2	alpha-gated-field	True	False	True	True	
+backend-casual/unknown-field-1	unknown-field	True	True	True	True	Fleet/lobby: problem validating schema. Check JSON formatting: jsonschema: '/spec' does not validate with file:///tmp/tmph2vqn3_u/sch
+backend-casual/unknown-field-2	unknown-field	True	True	True	True	Fleet/practice: problem validating schema. Check JSON formatting: jsonschema: '/spec' does not validate with file:///tmp/tmph2vqn3_u/sch
+backend-casual/unknown-field-3	unknown-field	True	True	True	True	FleetAutoscaler/lobby-buffer: problem validating schema. Check JSON formatting: jsonschema: '/spec/policy/buffer' does not validate with file:///tmp/t
+backend-casual/unknown-field-4	unknown-field	True	True	True	True	FleetAutoscaler/practice-weekend: problem validating schema. Check JSON formatting: jsonschema: '/spec/policy/chain/0/schedule/policy/buffer' does not val
+backend-casual/invalid-bounds-1	invalid-bounds	True	False	True	True	
+backend-casual/invalid-bounds-2	invalid-bounds	True	False	True	False	
+backend-casual/duplicate-name-1	duplicate-name	True	False	True	False	
+backend-casual/duplicate-name-2	duplicate-name	True	False	True	False	
+backend-casual/fas-schedule-unset-end-1	fas-schedule-unset-end	True	False	True	True	
+backend-casual/fas-second-autoscaler-1	fas-second-autoscaler	True	False	True	False	
+backend-casual/fas-second-autoscaler-2	fas-second-autoscaler	True	False	True	False	
+backend-casual/benign-rename-fleet-1	benign-rename-fleet	False	False	False	False	
+backend-casual/benign-rename-fleet-2	benign-rename-fleet	False	False	False	False	
+backend-casual/benign-replicas-1	benign-replicas	False	False	False	False	
+backend-casual/benign-replicas-2	benign-replicas	False	False	False	False	
+backend-casual/benign-add-label-1	benign-add-label	False	False	False	False	
+backend-casual/benign-add-label-2	benign-add-label	False	False	False	False	
+backend-casual/benign-image-tag-1	benign-image-tag	False	False	False	False	
+backend-casual/benign-image-tag-2	benign-image-tag	False	False	False	False	
+backend-tournament/fas-fleetname-typo-1	fas-fleetname-typo	True	False	True	False	
+backend-tournament/fas-list-key-typo-1	fas-list-key-typo	True	False	True	False	
+backend-tournament/alloc-label-typo-1	alloc-label-typo	True	False	True	False	
+backend-tournament/fleet-label-drift-1	fleet-label-drift	True	False	True	False	
+backend-tournament/alloc-list-key-typo-1	alloc-list-key-typo	True	False	True	False	
+backend-tournament/alloc-capacity-unreachable-1	alloc-capacity-unreachable	True	False	True	False	
+backend-tournament/alpha-gated-field-1	alpha-gated-field	True	False	True	True	
+backend-tournament/unknown-field-1	unknown-field	True	True	True	True	Fleet/tournament: problem validating schema. Check JSON formatting: jsonschema: '/spec' does not validate with file:///tmp/tmph2vqn3_u/sch
+backend-tournament/unknown-field-2	unknown-field	True	True	True	True	FleetAutoscaler/tournament-teams: problem validating schema. Check JSON formatting: jsonschema: '/spec/policy/list' does not validate with file:///tmp/tmp
+backend-tournament/invalid-bounds-1	invalid-bounds	True	False	True	True	
+backend-tournament/duplicate-name-1	duplicate-name	True	False	True	False	
+backend-tournament/fas-second-autoscaler-1	fas-second-autoscaler	True	False	True	False	
+backend-tournament/benign-rename-fleet-1	benign-rename-fleet	False	False	False	False	
+backend-tournament/benign-replicas-1	benign-replicas	False	False	False	False	
+backend-tournament/benign-add-label-1	benign-add-label	False	False	False	False	
+backend-tournament/benign-raise-capacity-1	benign-raise-capacity	False	False	False	False	
+backend-tournament/benign-image-tag-1	benign-image-tag	False	False	False	False	
+backend-arena/fas-fleetname-typo-1	fas-fleetname-typo	True	False	True	False	
+backend-arena/fas-fleetname-typo-2	fas-fleetname-typo	True	False	True	False	
+backend-arena/fas-counter-key-typo-1	fas-counter-key-typo	True	False	True	False	
+backend-arena/alloc-label-typo-1	alloc-label-typo	True	False	True	False	
+backend-arena/fleet-label-drift-1	fleet-label-drift	True	False	True	False	
+backend-arena/fleet-label-drift-2	fleet-label-drift	True	False	True	False	
+backend-arena/alloc-counter-key-typo-1	alloc-counter-key-typo	True	False	True	False	
+backend-arena/alloc-capacity-unreachable-1	alloc-capacity-unreachable	True	False	True	False	
+backend-arena/alpha-gated-field-1	alpha-gated-field	True	False	True	True	
+backend-arena/alpha-gated-field-2	alpha-gated-field	True	False	True	True	
+backend-arena/unknown-field-1	unknown-field	True	True	True	True	Fleet/arena-duo: problem validating schema. Check JSON formatting: jsonschema: '/spec' does not validate with file:///tmp/tmph2vqn3_u/sch
+backend-arena/unknown-field-2	unknown-field	True	True	True	True	Fleet/arena-squad: problem validating schema. Check JSON formatting: jsonschema: '/spec' does not validate with file:///tmp/tmph2vqn3_u/sch
+backend-arena/unknown-field-3	unknown-field	True	True	True	True	FleetAutoscaler/arena-duo-matches: problem validating schema. Check JSON formatting: jsonschema: '/spec/policy/counter' does not validate with file:///tmp/
+backend-arena/unknown-field-4	unknown-field	True	True	True	True	FleetAutoscaler/arena-squad-buffer: problem validating schema. Check JSON formatting: jsonschema: '/spec/policy/buffer' does not validate with file:///tmp/t
+backend-arena/invalid-bounds-1	invalid-bounds	True	False	True	True	
+backend-arena/invalid-bounds-2	invalid-bounds	True	False	True	True	
+backend-arena/duplicate-name-1	duplicate-name	True	False	True	False	
+backend-arena/duplicate-name-2	duplicate-name	True	False	True	False	
+backend-arena/fas-second-autoscaler-1	fas-second-autoscaler	True	False	True	False	
+backend-arena/fas-second-autoscaler-2	fas-second-autoscaler	True	False	True	False	
+backend-arena/fleet-priority-key-typo-1	fleet-priority-key-typo	True	False	True	False	
+backend-arena/benign-rename-fleet-1	benign-rename-fleet	False	False	False	False	
+backend-arena/benign-rename-fleet-2	benign-rename-fleet	False	False	False	False	
+backend-arena/benign-replicas-1	benign-replicas	False	False	False	False	
+backend-arena/benign-replicas-2	benign-replicas	False	False	False	False	
+backend-arena/benign-add-label-1	benign-add-label	False	False	False	False	
+backend-arena/benign-add-label-2	benign-add-label	False	False	False	False	
+backend-arena/benign-raise-capacity-1	benign-raise-capacity	False	False	False	False	
+backend-arena/benign-raise-capacity-2	benign-raise-capacity	False	False	False	False	
+backend-arena/benign-image-tag-1	benign-image-tag	False	False	False	False	
+backend-arena/benign-image-tag-2	benign-image-tag	False	False	False	False	
+backend-party/fas-fleetname-typo-1	fas-fleetname-typo	True	False	True	False	
+backend-party/fas-list-key-typo-1	fas-list-key-typo	True	False	True	False	
+backend-party/alloc-label-typo-1	alloc-label-typo	True	False	True	False	
+backend-party/fleet-label-drift-1	fleet-label-drift	True	False	True	False	
+backend-party/alloc-list-key-typo-1	alloc-list-key-typo	True	False	True	False	
+backend-party/alloc-capacity-unreachable-1	alloc-capacity-unreachable	True	False	True	False	
+backend-party/alpha-gated-field-1	alpha-gated-field	True	False	True	True	
+backend-party/unknown-field-1	unknown-field	True	True	True	True	Fleet/party: problem validating schema. Check JSON formatting: jsonschema: '/spec' does not validate with file:///tmp/tmph2vqn3_u/sch
+backend-party/unknown-field-2	unknown-field	True	True	True	True	FleetAutoscaler/party-players: problem validating schema. Check JSON formatting: jsonschema: '/spec/policy/list' does not validate with file:///tmp/tmp
+backend-party/invalid-bounds-1	invalid-bounds	True	False	True	True	
+backend-party/duplicate-name-1	duplicate-name	True	False	True	False	
+backend-party/fas-second-autoscaler-1	fas-second-autoscaler	True	False	True	False	
+backend-party/fleet-priority-key-typo-1	fleet-priority-key-typo	True	False	True	False	
+backend-party/benign-rename-fleet-1	benign-rename-fleet	False	False	False	False	
+backend-party/benign-replicas-1	benign-replicas	False	False	False	False	
+backend-party/benign-add-label-1	benign-add-label	False	False	False	False	
+backend-party/benign-raise-capacity-1	benign-raise-capacity	False	False	False	False	
+backend-party/benign-image-tag-1	benign-image-tag	False	False	False	False	
+backend-events/fas-fleetname-typo-1	fas-fleetname-typo	True	False	True	False	
+backend-events/fas-counter-key-typo-1	fas-counter-key-typo	True	False	True	False	
+backend-events/alloc-label-typo-1	alloc-label-typo	True	False	True	False	
+backend-events/fleet-label-drift-1	fleet-label-drift	True	False	True	False	
+backend-events/alloc-counter-key-typo-1	alloc-counter-key-typo	True	False	True	False	
+backend-events/alloc-capacity-unreachable-1	alloc-capacity-unreachable	True	False	True	False	
+backend-events/alpha-gated-field-1	alpha-gated-field	True	False	True	True	
+backend-events/unknown-field-1	unknown-field	True	True	True	True	Fleet/event-hosts: problem validating schema. Check JSON formatting: jsonschema: '/spec' does not validate with file:///tmp/tmph2vqn3_u/sch
+backend-events/unknown-field-2	unknown-field	True	True	True	True	FleetAutoscaler/event-sessions: problem validating schema. Check JSON formatting: jsonschema: '/spec/policy/chain/0/schedule/policy/counter' does not va
+backend-events/invalid-bounds-1	invalid-bounds	True	False	True	False	
+backend-events/duplicate-name-1	duplicate-name	True	False	True	False	
+backend-events/fas-schedule-unset-end-1	fas-schedule-unset-end	True	False	True	True	
+backend-events/fas-second-autoscaler-1	fas-second-autoscaler	True	False	True	False	
+backend-events/benign-rename-fleet-1	benign-rename-fleet	False	False	False	False	
+backend-events/benign-replicas-1	benign-replicas	False	False	False	False	
+backend-events/benign-add-label-1	benign-add-label	False	False	False	False	
+backend-events/benign-raise-capacity-1	benign-raise-capacity	False	False	False	False	
+backend-events/benign-image-tag-1	benign-image-tag	False	False	False	False	
+backend-lab/fas-fleetname-typo-1	fas-fleetname-typo	True	False	True	False	
+backend-lab/alloc-label-typo-1	alloc-label-typo	True	False	True	False	
+backend-lab/fleet-label-drift-1	fleet-label-drift	True	False	True	False	
+backend-lab/alloc-counter-key-typo-1	alloc-counter-key-typo	True	False	True	False	
+backend-lab/alloc-capacity-unreachable-1	alloc-capacity-unreachable	True	False	True	False	
+backend-lab/alpha-gated-field-1	alpha-gated-field	True	False	True	True	
+backend-lab/unknown-field-1	unknown-field	True	True	True	True	Fleet/bots: problem validating schema. Check JSON formatting: jsonschema: '/spec' does not validate with file:///tmp/tmph2vqn3_u/sch
+backend-lab/unknown-field-2	unknown-field	True	True	True	True	FleetAutoscaler/bots-buffer: problem validating schema. Check JSON formatting: jsonschema: '/spec/policy/buffer' does not validate with file:///tmp/t
+backend-lab/invalid-bounds-1	invalid-bounds	True	True	True	True	FleetAutoscaler/bots-buffer: problem validating schema. Check JSON formatting: jsonschema: '/spec/policy/buffer/maxReplicas' does not validate with f
+backend-lab/duplicate-name-1	duplicate-name	True	False	True	False	
+backend-lab/fas-second-autoscaler-1	fas-second-autoscaler	True	False	True	False	
+backend-lab/benign-rename-fleet-1	benign-rename-fleet	False	False	False	False	
+backend-lab/benign-replicas-1	benign-replicas	False	False	False	False	
+backend-lab/benign-add-label-1	benign-add-label	False	False	False	False	
+backend-lab/benign-raise-capacity-1	benign-raise-capacity	False	False	False	False	
+backend-lab/benign-image-tag-1	benign-image-tag	False	False	False	False	
+example-counter/fas-fleetname-typo-1	fas-fleetname-typo	True	False	True	False	
+example-counter/fas-counter-key-typo-1	fas-counter-key-typo	True	False	True	False	
+example-counter/alloc-label-typo-1	alloc-label-typo	True	False	True	False	
+example-counter/fleet-label-drift-1	fleet-label-drift	True	False	True	False	
+example-counter/alloc-counter-key-typo-1	alloc-counter-key-typo	True	False	True	False	
+example-counter/alloc-list-key-typo-1	alloc-list-key-typo	True	False	True	False	
+example-counter/alloc-capacity-unreachable-1	alloc-capacity-unreachable	True	False	True	False	
+example-counter/alpha-gated-field-1	alpha-gated-field	True	False	True	True	
+example-counter/unknown-field-1	unknown-field	True	True	True	True	Fleet/fleet-example: problem validating schema. Check JSON formatting: jsonschema: '/spec' does not validate with file:///tmp/tmph2vqn3_u/sch
+example-counter/unknown-field-2	unknown-field	True	True	True	True	FleetAutoscaler/fleet-autoscaler-counter: problem validating schema. Check JSON formatting: jsonschema: '/spec/policy/counter' does not validate with file:///tmp/
+example-counter/invalid-bounds-1	invalid-bounds	True	False	True	True	
+example-counter/duplicate-name-1	duplicate-name	True	False	True	False	
+example-counter/fas-second-autoscaler-1	fas-second-autoscaler	True	False	True	False	
+example-counter/fleet-priority-key-typo-1	fleet-priority-key-typo	True	False	True	False	
+example-counter/benign-rename-fleet-1	benign-rename-fleet	False	False	False	False	
+example-counter/benign-replicas-1	benign-replicas	False	False	False	False	
+example-counter/benign-add-label-1	benign-add-label	False	False	False	False	
+example-counter/benign-raise-capacity-1	benign-raise-capacity	False	False	False	False	
+example-counter/benign-image-tag-1	benign-image-tag	False	False	False	False	
+example-list/fas-fleetname-typo-1	fas-fleetname-typo	True	False	True	False	
+example-list/fas-list-key-typo-1	fas-list-key-typo	True	False	True	False	
+example-list/alpha-gated-field-1	alpha-gated-field	True	False	True	True	
+example-list/unknown-field-1	unknown-field	True	True	True	True	Fleet/fleet-example: problem validating schema. Check JSON formatting: jsonschema: '/spec' does not validate with file:///tmp/tmph2vqn3_u/sch
+example-list/unknown-field-2	unknown-field	True	True	True	True	FleetAutoscaler/fleet-autoscaler-list: problem validating schema. Check JSON formatting: jsonschema: '/spec/policy/list' does not validate with file:///tmp/tmp
+example-list/invalid-bounds-1	invalid-bounds	True	False	True	True	
+example-list/duplicate-name-1	duplicate-name	True	False	True	False	
+example-list/fas-second-autoscaler-1	fas-second-autoscaler	True	False	True	False	
+example-list/fleet-priority-key-typo-1	fleet-priority-key-typo	True	False	True	False	
+example-list/benign-rename-fleet-1	benign-rename-fleet	False	False	False	False	
+example-list/benign-replicas-1	benign-replicas	False	False	False	False	
+example-list/benign-add-label-1	benign-add-label	False	False	False	False	
+example-list/benign-raise-capacity-1	benign-raise-capacity	False	False	False	False	
+example-list/benign-image-tag-1	benign-image-tag	False	False	False	False	
+example-buffer/fas-fleetname-typo-1	fas-fleetname-typo	True	False	True	False	
+example-buffer/alpha-gated-field-1	alpha-gated-field	True	False	True	True	
+example-buffer/unknown-field-1	unknown-field	True	True	True	True	Fleet/fleet-example: problem validating schema. Check JSON formatting: jsonschema: '/spec' does not validate with file:///tmp/tmph2vqn3_u/sch
+example-buffer/unknown-field-2	unknown-field	True	True	True	True	FleetAutoscaler/fleet-autoscaler-example: problem validating schema. Check JSON formatting: jsonschema: '/spec/policy/buffer' does not validate with file:///tmp/t
+example-buffer/invalid-bounds-1	invalid-bounds	True	False	True	True	
+example-buffer/duplicate-name-1	duplicate-name	True	False	True	False	
+example-buffer/fas-second-autoscaler-1	fas-second-autoscaler	True	False	True	False	
+example-buffer/fleet-priority-key-typo-1	fleet-priority-key-typo	True	False	True	False	
+example-buffer/benign-rename-fleet-1	benign-rename-fleet	False	False	False	False	
+example-buffer/benign-replicas-1	benign-replicas	False	False	False	False	
+example-buffer/benign-add-label-1	benign-add-label	False	False	False	False	
+example-buffer/benign-raise-capacity-1	benign-raise-capacity	False	False	False	False	
+example-buffer/benign-image-tag-1	benign-image-tag	False	False	False	False	
+example-schedule/fas-fleetname-typo-1	fas-fleetname-typo	True	False	True	False	
+example-schedule/alpha-gated-field-1	alpha-gated-field	True	False	True	True	
+example-schedule/unknown-field-1	unknown-field	True	True	True	True	Fleet/fleet-example: problem validating schema. Check JSON formatting: jsonschema: '/spec' does not validate with file:///tmp/tmph2vqn3_u/sch
+example-schedule/unknown-field-2	unknown-field	True	True	True	True	FleetAutoscaler/schedule-fleet-autoscaler: problem validating schema. Check JSON formatting: jsonschema: '/spec/policy/schedule/policy/buffer' does not validate wi
+example-schedule/invalid-bounds-1	invalid-bounds	True	False	True	False	
+example-schedule/duplicate-name-1	duplicate-name	True	False	True	False	
+example-schedule/fas-schedule-unset-end-1	fas-schedule-unset-end	True	False	True	True	
+example-schedule/fas-second-autoscaler-1	fas-second-autoscaler	True	False	True	False	
+example-schedule/fleet-priority-key-typo-1	fleet-priority-key-typo	True	False	True	False	
+example-schedule/benign-rename-fleet-1	benign-rename-fleet	False	False	False	False	
+example-schedule/benign-replicas-1	benign-replicas	False	False	False	False	
+example-schedule/benign-add-label-1	benign-add-label	False	False	False	False	
+example-schedule/benign-raise-capacity-1	benign-raise-capacity	False	False	False	False	
+example-schedule/benign-image-tag-1	benign-image-tag	False	False	False	False	
+example-chain/fas-fleetname-typo-1	fas-fleetname-typo	True	False	True	False	
+example-chain/fas-counter-key-typo-1	fas-counter-key-typo	True	False	True	False	
+example-chain/alpha-gated-field-1	alpha-gated-field	True	False	True	True	
+example-chain/unknown-field-1	unknown-field	True	True	True	True	Fleet/fleet-example: problem validating schema. Check JSON formatting: jsonschema: '/spec' does not validate with file:///tmp/tmph2vqn3_u/sch
+example-chain/unknown-field-2	unknown-field	True	True	True	True	FleetAutoscaler/chain-fleet-autoscaler: problem validating schema. Check JSON formatting: jsonschema: '/spec/policy/chain/0/schedule/policy/buffer' does not val
+example-chain/invalid-bounds-1	invalid-bounds	True	False	True	False	
+example-chain/duplicate-name-1	duplicate-name	True	False	True	False	
+example-chain/fas-schedule-unset-end-1	fas-schedule-unset-end	True	False	True	True	
+example-chain/fas-second-autoscaler-1	fas-second-autoscaler	True	False	True	False	
+example-chain/fleet-priority-key-typo-1	fleet-priority-key-typo	True	False	True	False	
+example-chain/benign-rename-fleet-1	benign-rename-fleet	False	False	False	False	
+example-chain/benign-replicas-1	benign-replicas	False	False	False	False	
+example-chain/benign-add-label-1	benign-add-label	False	False	False	False	
+example-chain/benign-raise-capacity-1	benign-raise-capacity	False	False	False	False	
+example-chain/benign-image-tag-1	benign-image-tag	False	False	False	False	
+example-webhook/fas-fleetname-typo-1	fas-fleetname-typo	True	False	True	False	
+example-webhook/alpha-gated-field-1	alpha-gated-field	True	False	True	True	
+example-webhook/unknown-field-1	unknown-field	True	True	True	True	Fleet/simple-game-server: problem validating schema. Check JSON formatting: jsonschema: '/spec' does not validate with file:///tmp/tmph2vqn3_u/sch
+example-webhook/duplicate-name-1	duplicate-name	True	False	True	False	
+example-webhook/fas-second-autoscaler-1	fas-second-autoscaler	True	False	True	False	
+example-webhook/benign-rename-fleet-1	benign-rename-fleet	False	False	False	False	
+example-webhook/benign-replicas-1	benign-replicas	False	False	False	False	
+example-webhook/benign-add-label-1	benign-add-label	False	False	False	False	
+example-webhook/benign-image-tag-1	benign-image-tag	False	False	False	False	
+example-simple-game-server/fas-fleetname-typo-1	fas-fleetname-typo	True	False	True	False	
+example-simple-game-server/alpha-gated-field-1	alpha-gated-field	True	False	True	True	
+example-simple-game-server/unknown-field-1	unknown-field	True	True	True	True	Fleet/simple-game-server: problem validating schema. Check JSON formatting: jsonschema: '/spec' does not validate with file:///tmp/tmph2vqn3_u/sch
+example-simple-game-server/unknown-field-2	unknown-field	True	True	True	True	FleetAutoscaler/simple-game-server-autoscaler: problem validating schema. Check JSON formatting: jsonschema: '/spec/policy/buffer' does not validate with file:///tmp/t
+example-simple-game-server/invalid-bounds-1	invalid-bounds	True	True	True	True	FleetAutoscaler/simple-game-server-autoscaler: problem validating schema. Check JSON formatting: jsonschema: '/spec/policy/buffer/maxReplicas' does not validate with f
+example-simple-game-server/duplicate-name-1	duplicate-name	True	False	True	False	
+example-simple-game-server/fas-second-autoscaler-1	fas-second-autoscaler	True	False	True	False	
+example-simple-game-server/benign-rename-fleet-1	benign-rename-fleet	False	False	False	False	
+example-simple-game-server/benign-replicas-1	benign-replicas	False	False	False	False	
+example-simple-game-server/benign-add-label-1	benign-add-label	False	False	False	False	
+example-simple-game-server/benign-image-tag-1	benign-image-tag	False	False	False	False	
+example-xonotic/fas-fleetname-typo-1	fas-fleetname-typo	True	False	True	False	
+example-xonotic/alpha-gated-field-1	alpha-gated-field	True	False	True	True	
+example-xonotic/unknown-field-1	unknown-field	True	True	True	True	Fleet/xonotic: problem validating schema. Check JSON formatting: jsonschema: '/spec' does not validate with file:///tmp/tmph2vqn3_u/sch
+example-xonotic/unknown-field-2	unknown-field	True	True	True	True	FleetAutoscaler/xonotic-autoscaler: problem validating schema. Check JSON formatting: jsonschema: '/spec/policy/buffer' does not validate with file:///tmp/t
+example-xonotic/invalid-bounds-1	invalid-bounds	True	True	True	True	FleetAutoscaler/xonotic-autoscaler: problem validating schema. Check JSON formatting: jsonschema: '/spec/policy/buffer/maxReplicas' does not validate with f
+example-xonotic/duplicate-name-1	duplicate-name	True	False	True	False	
+example-xonotic/fas-second-autoscaler-1	fas-second-autoscaler	True	False	True	False	
+example-xonotic/benign-rename-fleet-1	benign-rename-fleet	False	False	False	False	
+example-xonotic/benign-replicas-1	benign-replicas	False	False	False	False	
+example-xonotic/benign-add-label-1	benign-add-label	False	False	False	False	
+example-xonotic/benign-image-tag-1	benign-image-tag	False	False	False	False	
+example-supertuxkart/alpha-gated-field-1	alpha-gated-field	True	False	True	True	
+example-supertuxkart/unknown-field-1	unknown-field	True	True	True	True	Fleet/supertuxkart: problem validating schema. Check JSON formatting: jsonschema: '/spec' does not validate with file:///tmp/tmph2vqn3_u/sch
+example-supertuxkart/duplicate-name-1	duplicate-name	True	False	True	False	
+example-supertuxkart/benign-rename-fleet-1	benign-rename-fleet	False	False	False	False	
+example-supertuxkart/benign-replicas-1	benign-replicas	False	False	False	False	
+example-supertuxkart/benign-add-label-1	benign-add-label	False	False	False	False	
+example-supertuxkart/benign-image-tag-1	benign-image-tag	False	False	False	False	
+example-cpp/alpha-gated-field-1	alpha-gated-field	True	False	True	True	
+example-cpp/unknown-field-1	unknown-field	True	True	True	True	Fleet/cpp-simple-{{ generateName }}: problem validating schema. Check JSON formatting: jsonschema: '/spec' does not validate with file:///tmp/tmph2vqn3_u/sch
+example-cpp/benign-replicas-1	benign-replicas	False	False	False	False	
+example-cpp/benign-add-label-1	benign-add-label	False	False	False	False	
+example-cpp/benign-image-tag-1	benign-image-tag	False	False	False	False	
