@@ -2,3 +2,4 @@
 /dist/
 /coverage.out
 /bench/mutants/
+/demo/kubeconfig
