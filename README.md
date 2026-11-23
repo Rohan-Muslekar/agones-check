@@ -152,6 +152,8 @@ profiles ──► gate sets per environment ─► Agones Validate() per env �
 
 Agones keeps feature gates in a package-level variable, so environments are checked one after another under a mutex.
 
+The [software requirements specification](docs/SRS.md) lists every requirement with its acceptance criteria, the tests that check them, and UML models of the design.
+
 ## Evaluation
 
 | Command | What it measures | Output |
