@@ -1,0 +1,53 @@
+# Ranked 1v1 matches. One GameServer hosts up to 4 concurrent rooms.
+apiVersion: agones.dev/v1
+kind: Fleet
+metadata:
+  name: ranked
+  namespace: game
+spec:
+  replicas: 4
+  scheduling: Packed
+  priorities:
+    - type: Counter
+      key: rooms
+      order: Ascending
+  template:
+    metadata:
+      labels:
+        mode: ranked
+        region: ap-south
+    spec:
+      ports:
+        - name: default
+          containerPort: 7654
+      counters:
+        rooms:
+          count: 0
+          capacity: 4
+      lists:
+        players:
+          capacity: 8
+      template:
+        spec:
+          containers:
+            - name: game
+              image: registry.example.com/cricket/server:2.14.0
+              resources:
+                requests:
+                  memory: 256Mi
+                  cpu: 250m
+---
+apiVersion: autoscaling.agones.dev/v1
+kind: FleetAutoscaler
+metadata:
+  name: ranked-rooms
+  namespace: game
+spec:
+  fleetName: ranked
+  policy:
+    type: Counter
+    counter:
+      key: rooms
+      bufferSize: 8
+      minCapacity: 8
+      maxCapacity: 400

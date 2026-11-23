@@ -1,0 +1,194 @@
+AGONES-CHECK TALK SCRIPT (about 12:30)
+
+=== SLIDE 1: Cover ===
+• Rohan (0:15)
+• Hi everyone, we are Rohan, Ankit and Emmanuel.
+• Our project is agones-check, on the applied track.
+• It catches Agones configuration mistakes before they reach a cluster.
+• Notice the card on the cover: the same Fleet is fine in prod and dev, but rejected on Agones 1.40, and that is the kind of difference we check.
+
+=== SLIDE 2: What Agones is ===
+• Rohan (0:45)
+• Quick background first.
+• Agones is the open-source Kubernetes extension that game studios use to host dedicated game servers.
+• A GameServer is one server process that players connect to.
+• A Fleet keeps a pool of identical GameServers warm, and can count things like open rooms and players.
+• A FleetAutoscaler resizes one Fleet, which it names with fleetName.
+• A GameServerAllocation is the matchmaker asking for a ready server that fits the match.
+• The same manifests go to dev, staging and prod, and each cluster can run a different Agones version with different feature gates.
+
+=== SLIDE 3: Agones checks one object at a time ===
+• Rohan (1:00)
+• A game backend is not one object: the objects point at each other by name, by label and by counter key.
+• But Agones validates each object on its own, in one cluster, at the moment it is applied.
+• So a one-letter typo in an autoscaler's fleetName is accepted, and the autoscaler simply never scales.
+• An allocation whose selector matches no Fleet is accepted, and every match request comes back UnAllocated.
+• And a field behind an alpha feature gate passes in dev, then is rejected halfway through the production rollout.
+• In our benchmark, a production dry run caught only 70 of 174 seeded mistakes.
+
+=== SLIDE 4: Why the webhook cannot see these ===
+• Rohan (1:00) — point at highlighted line 478 in the code screenshot
+• We read Agones 1.61's validation code to see where it stops.
+• Every webhook handler fills in defaults and calls Validate on one decoded object.
+• Validate gets that object and nothing else, so it cannot check that a referenced Fleet exists.
+• Agones even says so in its own code: line 478 says the counter key is not checked against the Fleet.
+• Feature gates are global to the process, so one webhook knows only its own cluster's settings.
+• And it all runs at apply time; the only earlier check is a dry run against every live cluster.
+• That gives three gaps: across objects, across environments, and before deployment.
+
+=== SLIDE 5: Objective ===
+• Rohan (0:30)
+• Our objective was to close those three gaps before deployment.
+• First, check across objects: references, keys, capacities, and whether an allocation can ever succeed.
+• Second, check every environment in one run, and report where they disagree.
+• Third, do it offline in CI, in under two seconds for 200 manifests and three environments.
+• And then prove it: catch the mistakes, stay quiet on valid files, be fast, and agree with a real cluster.
+
+=== SLIDE 6: Design ===
+• Rohan (1:00)
+• Here is the design.
+• The loader decodes every manifest strictly into Agones' own Go types and fills in the same defaults the cluster would.
+• The key decision: we reuse Agones' own ApplyDefaults and Validate code instead of writing our own copy.
+• So for each object we get exactly the webhook's verdict, offline.
+• We run that once per environment profile, switching the feature gates each time.
+• Next, we link the objects into a graph, autoscaler to Fleet and allocation to Fleets by label, and run the cross-resource rules on it.
+• Then we merge: an object that passes in one environment and fails in another becomes a drift finding.
+• Errors fail on every cluster; warnings state what they assume.
+• Ankit will now show the rules and the tool.
+
+=== SLIDE 7: Divider: The tool ===
+• Ankit (0:00) — click straight through
+• Thanks, Rohan.
+
+=== SLIDE 8: Rules ===
+• Ankit (0:50)
+• The rules fall into four groups.
+• AC001 and AC002 give the webhook's own verdict offline, for every environment at once.
+• The autoscaler rules check that fleetName and the counter or list keys really exist in the target Fleet.
+• The allocation rules check that at least one Fleet can ever satisfy the selector; otherwise every request is UnAllocated.
+• The last group covers duplicate objects, two Schedule-policy defects in Agones itself, and drift between environments.
+• Every finding gives the file, the line, the field, the environments and a did-you-mean hint.
+
+=== SLIDE 9: One binary, three ways to run it ===
+• Ankit (0:40)
+• It is one Go binary, and nothing runs in the cluster.
+• You run it on files, on folders, or on rendered Helm output piped in.
+• The same binary works as a kubectl plugin.
+• And our GitHub Action, pinned to release v0.1.0, puts findings as annotations on the pull request.
+• The exit code is 0 when clean, 1 with findings, 2 for bad input, so CI can fail the build.
+• Let me show you.
+
+=== SLIDE 10: Live demo ===
+• Ankit (2:30) — switch to the terminal, six steps of about 25 seconds
+
+--- Before the talk (pre-flight) ---
+go install ./cmd/agones-check && which agones-check     (from the repo root)
+podman start agones-check-control-plane
+cd demo
+KIND_EXPERIMENTAL_PROVIDER=podman kind get kubeconfig --name agones-check > kubeconfig
+export KUBECONFIG=$PWD/kubeconfig
+kubectl get pods -n agones-system
+./demo.sh     (rehearse once, then clear the screen and bump the font size)
+
+--- Step 1: the ranked game mode as it ships ---
+agones-check -e prod,dev good
+• This is our ranked game mode: a Fleet, an autoscaler and an allocation.
+• We check it against prod and dev in one run.
+• Zero errors, zero warnings, in under a millisecond.
+
+--- Step 2: three one-word mistakes ---
+diff -r good broken | grep '^[<>]'
+• The broken copy has three small changes.
+• The autoscaler's fleetName is now rankd, missing an e.
+• The allocation's label is rankd too, in both selectors.
+• And the Fleet adds a players field, which needs the alpha PlayerTracking gate.
+
+--- Step 3: what the cluster says today ---
+kubectl apply --dry-run=server -f broken/fleet.yaml; kubectl create --dry-run=server -f broken/allocation.yaml -o name
+• This is how you check today: a server dry run against our kind cluster with prod gates.
+• The autoscaler with the typo is accepted.
+• The allocation with the typo is accepted.
+• Only the Fleet is rejected, and only because this cluster is prod; a dev cluster would accept all three.
+• So two of the three mistakes would reach production.
+
+--- Step 4: agones-check, offline, prod and dev ---
+agones-check -e prod,dev broken
+• Now agones-check, with no cluster, prod and dev in one run.
+• AC110: no Fleet can ever satisfy this allocation, so every match request returns UnAllocated; and it asks, did you mean ranked?
+• AC002 and AC201: the Fleet is refused in prod but accepted in dev, so it would break halfway through the rollout.
+• AC101: the autoscaler points at a Fleet that does not exist, again with did you mean ranked.
+• All three mistakes, with file and line, before the merge.
+
+--- Step 5: which object works where ---
+agones-check -e prod,dev,1.40 -o matrix broken
+• The matrix view: one row per object, one column per environment.
+• Broken means the cluster accepts it but it fails at runtime; REJECTED means it is refused at apply.
+• The Fleet only works in dev.
+• On Agones 1.40, counters and lists are not on by default, so everything is rejected; useful before an upgrade or a rollback.
+
+--- Step 6: the same findings in GitHub ---
+agones-check -o github broken 2>/dev/null | grep '^::'
+• Last, the same findings in GitHub's annotation format.
+• This is what our Action posts, right on the changed lines of the pull request.
+• Back to the slides; Emmanuel will show how we evaluated it.
+
+--- If something goes wrong ---
+• Step 3 fails (connection refused): run export KUBECONFIG=$PWD/kubeconfig and retry once; if still down, say "the cluster is not reachable, here is the recorded output", skip to step 4, and show backup slide 19 afterwards.
+• agones-check not found: use backup slides 18 to 22, or play the recording on slide 11.
+• Anything else: go to slide 11 and play the recording, using the same lines.
+
+=== SLIDE 11: Demo recording (fallback only) ===
+• Ankit (1:54) — skip if the live demo worked
+• Play it and say the same lines as the live demo.
+• Pause around 1:00 (step 4) and 1:20 (step 5) if you need more time.
+• Emmanuel will now show how we evaluated it.
+
+=== SLIDE 12: Divider: Evaluation ===
+• Emmanuel (0:00) — click straight through
+• Thanks, Ankit.
+
+=== SLIDE 13: How we evaluated it ===
+• Emmanuel (0:50)
+• We evaluated the tool in four ways.
+• First, a mutation benchmark: 18 correct scenarios, changed by 15 fault operators and 5 harmless ones, giving 261 variants: 174 faulty and 87 benign.
+• Second, a cluster oracle: every variant sent to real Agones with a server dry run, to check our offline verdict matches the real webhook.
+• We did that on three clusters: Agones 1.61 with prod gates, 1.61 with every alpha gate on, and Agones 1.54.
+• Third, eight runtime experiments on kind, to see what accepted mistakes actually do.
+• Fourth, public manifests: 438 files from 152 GitHub repositories, every finding triaged by hand.
+• On top of that: 38 test functions and a performance benchmark from 55 to 1,606 objects.
+
+=== SLIDE 14: It found all 174 seeded mistakes ===
+• Emmanuel (1:00) — point at the bars from bottom to top
+• This is the main result.
+• kubeconform, a schema-only checker, finds 38 of the 174 faulty variants.
+• A dry run with dev gates finds 51; with prod gates, 70.
+• agones-check finds all 174, and raises no false alarm on the 87 harmless ones.
+• Counting only errors it finds 140; the other 34 are warnings, because they depend on something outside the files.
+• All 100 cross-resource mistakes are found, where a dry run finds none.
+• All 19 alpha-gate mistakes are found, where a dev dry run finds none.
+• To be fair, we wrote these operators knowing the rules, so this recall is optimistic, which is why the next slide matters.
+
+=== SLIDE 15: Checked against real clusters and real code ===
+• Emmanuel (1:00)
+• Four results do not depend on our own operators.
+• One: our offline verdict matches a real cluster on all 261 variants, on all three clusters.
+• The first oracle run actually disagreed on 18 variants, and that is how we found a real Agones bug.
+• Two: all eight runtime cases failed on the cluster exactly the way the tool predicts.
+• Three: of the 438 public files, 389 Agones objects from 126 repositories could be checked; 17 repositories have confirmed mistakes, and in 11 of them the mistake passes a dry run.
+• Four: it takes 45.6 milliseconds for 209 objects and three environments, and 0.07 seconds for the whole command, far under our 2-second target.
+
+=== SLIDE 16: Three defects in Agones, and our limits ===
+• Emmanuel (0:50)
+• The tool also found three defects in Agones 1.61 itself.
+• One: a policy nested inside a Schedule policy is never validated, so impossible bounds are accepted; the fix is a single function call.
+• Two: a Schedule without an end time is rejected, although the docs say it is optional; we found it because our oracle disagreed with us.
+• Three: Agones' official List autoscaler example removes servers when used with its official Fleet example.
+• We have prepared upstream reports for all three.
+• Our limits: we wrote the operators, so full recall is optimistic; the tool carries one release's validation code; and folders holding several variants of one object cause false alarms.
+
+=== SLIDE 17: Takeaways ===
+• Emmanuel (0:20) — stay on this slide for questions
+• To sum up: Agones checks one object, in one cluster, at apply time.
+• agones-check checks the whole deployment against every environment, offline, at pull-request time.
+• It is open source at this link, and every number is reproducible from the repository.
+• Thank you; we are happy to take questions.

@@ -1,0 +1,36 @@
+# Matchmaker request: an open room on a ranked server.
+apiVersion: allocation.agones.dev/v1
+kind: GameServerAllocation
+metadata:
+  generateName: ranked-
+  namespace: game
+spec:
+  scheduling: Packed
+  selectors:
+    - matchLabels:
+        mode: ranked
+        region: ap-south
+      gameServerState: Allocated
+      counters:
+        rooms:
+          minAvailable: 1
+    - matchLabels:
+        mode: ranked
+        region: ap-south
+      gameServerState: Ready
+      counters:
+        rooms:
+          minAvailable: 1
+  priorities:
+    - type: Counter
+      key: rooms
+      order: Ascending
+  counters:
+    rooms:
+      action: Increment
+      amount: 1
+  lists:
+    players:
+      addValues:
+        - player-a
+        - player-b
